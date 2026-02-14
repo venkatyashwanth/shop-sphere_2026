@@ -1,0 +1,59 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+}
+
+.image {
+    height: 180px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.info {
+    h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+}
+
+.category {
+    font-size: 14px;
+    color: var(--color-secondary);
+}
+
+.price {
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+/* Tablet and Above*/ 
+@media (min-width: 768px){
+    .card{
+        padding: 24px;
+    }
+    .image{
+        height: 220px;
+    }
+    .info{
+        h3{
+            font-size: 18px;
+        }
+    }
+}
+
+/* Accessibility */ 
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        transition: none;
+    }
+    
+}

@@ -1,0 +1,53 @@
+.header {
+    background-color: white;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+.nav a {
+    margin-left: 16px;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--color-secondary);
+    transition: 0.2s ease;
+}
+
+/* Tablet and Above*/
+@media (min-width: 768px) {
+    .wrapper {
+        height: 70px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .nav a {
+        margin-left: 24px;
+        font-size: 15px;
+    }
+}
+
+
+/*Accessibility*/
+@media(prefers-reduced-motion: reduce) {
+    .nav a {
+        transition: none;
+    }
+}
