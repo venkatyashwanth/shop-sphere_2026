@@ -17,7 +17,6 @@ export default function ProductGrid() {
     }, [dispatch, status])
 
     if (status !== "success") {
-        console.log("loading....")
         return (
             <div className={styles.grid}>
                 {Array.from({ length: 6 }).map((_, index) => (
@@ -28,7 +27,6 @@ export default function ProductGrid() {
     }
 
     if (status === "error") return <p>{error}</p>
-    // small update
     return (
         <div className={styles.grid}>
             {items.map((product) => (

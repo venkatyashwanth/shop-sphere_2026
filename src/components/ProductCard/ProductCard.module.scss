@@ -66,10 +66,27 @@
     }
 }
 
+.button{
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: var(--color-accent);
+    color: #fff;
+    cursor: pointer;
+    transition: 0o.2s ease;
+    &:hover{
+        opacity: 0.9;
+    }
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
     .card {
         transition: none;
         animation: none;
+    }
+    .button{
+        transition: none;
     }
 }
