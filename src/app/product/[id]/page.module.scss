@@ -79,6 +79,22 @@
     }
 }
 
+.relatedSection {
+    margin: 60px 0;
+
+    h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+}
+
+.relatedGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
 /* Tablet and Desktop */
 @media (min-width: 768px) {
     .wrapper {
@@ -102,6 +118,10 @@
         h1 {
             font-size: 28px;
         }
+    }
+
+    .relatedGrid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
