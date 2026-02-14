@@ -3,24 +3,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { normalizeFirestoreDoc } from "@/lib/normalizeFirestoreDoc";
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async (_, { rejectWithValue }) => {
         try {
             const snapshot = await getDocs(collection(db, "products"));
-
-            const products = snapshot.docs.map((doc) => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    ...data,
-                    createdAt: data.createdAt ? data.createdAt.toDate().toISOString() : null,
-                }
-            })
-
+            const products = snapshot.docs.map((docSnap) => normalizeFirestoreDoc(docSnap))
             return products;
-
         } catch (error) {
             return rejectWithValue(error.message);
         }
