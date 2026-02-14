@@ -28,7 +28,7 @@ export default function ProductGrid() {
     }
 
     if (status === "error") return <p>{error}</p>
-
+    // small update
     return (
         <div className={styles.grid}>
             {items.map((product) => (
