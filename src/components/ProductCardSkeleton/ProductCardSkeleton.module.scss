@@ -1,0 +1,72 @@
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.image {
+    height: 180px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background: #eaeaea;
+    position: relative;
+    overflow: hidden;
+}
+
+.line {
+    height: 14px;
+    background: #eaeaea;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.image::after,
+.line::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150px;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.6),
+            transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(300px);
+    }
+}
+
+.small {
+    width: 60%;
+}
+
+.price {
+    width: 40%;
+}
+
+/* Tablet and Above*/
+@media (min-width: 768px) {
+    .card {
+        padding: 24px;
+    }
+
+    .image {
+        height: 220px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .image::after,
+    .line::after {
+        animation: none;
+    }
+}
