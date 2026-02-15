@@ -56,9 +56,9 @@ export default function CartPage() {
                 <h3>Order Summary</h3>
                 <p>Total: ₹{totalPrice}</p>
 
-                <button className={styles.checkout}>
+                <Link href="/checkout" className={styles.checkout}>
                     Proceed to Checkout
-                </button>
+                </Link>
                 <button className={styles.clear} onClick={() => dispatch(clearCart())}>
                     Clear cart
                 </button>
