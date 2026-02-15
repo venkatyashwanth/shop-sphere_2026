@@ -30,8 +30,7 @@ export default function ConfirmStep({
                 createdAt: serverTimestamp(),
             })
             dispatch(clearCart());
-            // router.replace("/order-success");
-            router.replace("/");
+            router.replace("/order-success");
         } catch (err) {
             console.error("Order Error: ", err);
         }
