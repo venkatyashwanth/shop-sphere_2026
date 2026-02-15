@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -9,8 +8,11 @@ import { useSelector } from "react-redux";
 import { auth } from "@/lib/firebase";
 
 export default function LoginPage() {
-    const user = useSelector((state) => state.auth.user);
-    const authLoading = useSelector((state) => state.auth.loading);
+    const authState = useSelector((state) => state.auth);
+    // const user = useSelector((state) => state.auth.user);
+    // const authLoading = useSelector((state) => state.auth.loading);
+    const user = authState?.user;
+    const authLoading = authState?.loading;
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirect = searchParams.get("redirect") || "/";
@@ -18,6 +20,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading,setLoading] = useState(false);
+    const [mounted,setMounted] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -36,13 +39,18 @@ export default function LoginPage() {
         setLoading(false);
     };
 
+    useEffect(() =>{
+        setMounted(true);
+    },[])
+
     useEffect(() => {
         if(!authLoading && user){
             router.replace("/");
         }
     },[user,authLoading,router])
 
-    if (authLoading) return null;
+    if (!mounted) return null;
+    // if(typeof window === "undefined") return null;
     return (
         <div className={styles.wrapper}>
             <form className={styles.form} onSubmit={handleLogin}>
