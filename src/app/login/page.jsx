@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { signInWithEmailAndPassword } from "firebase/auth";
