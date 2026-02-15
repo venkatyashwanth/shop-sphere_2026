@@ -1,0 +1,101 @@
+.wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+}
+
+/* ========================= */
+/* Form Styling (Address)   */
+/* ========================= */
+.checkoutForm {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 14px;
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        outline: none;
+        transition: border 0.2s ease;
+
+        &:focus {
+            border-color: var(--color-accent);
+        }
+    }
+
+    button {
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: opacity 0.2s ease, transform 0.1s ease;
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        &.submit.primary {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        &.submit.secondary {
+            background: #f3f3f3;
+            color: #333;
+        }
+
+    }
+}
+
+/* ========================= */
+/* Desktop Enhancement      */
+/* ========================= */
+
+@media (min-width: 768px){
+    .wrapper{
+        padding: 48px 24px 100px;
+    }
+    .checkoutForm{
+        input{
+            font-size: 16px;
+        }
+        button{
+            font-size: 16px;
+        }
+    }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+    .checkoutForm {
+        input {
+            transition: none;
+        }
+
+        button {
+            transition: none;
+        }
+    }
+}
