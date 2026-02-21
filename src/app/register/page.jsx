@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.scss";
 import { useEffect, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -23,8 +24,13 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            router.push("/");
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db,"users",userCredential.user.uid),{
+                emal: userCredential.user.email,
+                role: "user",
+                createdAt: new Date().toISOString()
+            })
+            router.push("/");   
         } catch (err) {
             setError("Could not create account");
         }

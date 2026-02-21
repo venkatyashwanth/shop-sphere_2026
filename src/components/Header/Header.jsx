@@ -30,33 +30,33 @@ export default function Header() {
     }, [])
 
     useEffect(() => {
-        function handleKeyDown(event){
-            if(event.key === "Escape"){
+        function handleKeyDown(event) {
+            if (event.key === "Escape") {
                 setOpen(false);
             }
         }
-        if(open){
+        if (open) {
             document.addEventListener("keydown", handleKeyDown);
         }
 
-        return () => {document.removeEventListener("keydown",handleKeyDown)}
-    },[open])
+        return () => { document.removeEventListener("keydown", handleKeyDown) }
+    }, [open])
 
     // Keyboard Navigation
     useEffect(() => {
-        if(!open) return;
+        if (!open) return;
         const menu = menuRef.current;
-        if(!menu) return;
+        if (!menu) return;
 
         const focusable = menu.querySelectorAll('[role="menuitem"]');
-        if(!focusable.length) return;
+        if (!focusable.length) return;
 
         let index = 0;
         focusable[index].focus();
-        function handleKeyDown(e){
+        function handleKeyDown(e) {
             console.log(e.key);
-            if(!open) return;
-            if(e.key === "Escape"){
+            if (!open) return;
+            if (e.key === "Escape") {
                 e.preventDefault();
                 console.log("click");
 
@@ -64,28 +64,28 @@ export default function Header() {
                 avatarRef.current?.focus();
                 return;
             }
-            if(e.key === "ArrowDown"){
+            if (e.key === "ArrowDown") {
                 e.preventDefault();
                 index = (index + 1) % focusable.length;
                 focusable[index].focus();
                 return;
             }
-            if(e.key === "ArrowUp"){
+            if (e.key === "ArrowUp") {
                 e.preventDefault();
-                index = (index -1 + focusable.length) % focusable.length;
+                index = (index - 1 + focusable.length) % focusable.length;
                 focusable[index].focus();
                 return;
             }
-            if(e.key === "Tab"){
+            if (e.key === "Tab") {
                 e.preventDefault();
                 index = e.shiftKey ? (index - 1 + focusable.length) % focusable.length : (index + 1) % focusable.length;
                 focusable[index].focus();
             }
         }
 
-        menu.addEventListener("keydown",handleKeyDown);
-        return () => {menu.removeEventListener("keydown",handleKeyDown)}
-    },[open])
+        menu.addEventListener("keydown", handleKeyDown);
+        return () => { menu.removeEventListener("keydown", handleKeyDown) }
+    }, [open])
 
     const handleLogout = async () => {
         await signOut(auth);
@@ -131,19 +131,22 @@ export default function Header() {
                                     >
                                         {user.email?.charAt(0).toUpperCase()}
                                     </button>
-                                    <span className={`${styles.dropdownArrow} ${open? styles.rotateArrow: ""}`}>🔻</span>
+                                    <span className={`${styles.dropdownArrow} ${open ? styles.rotateArrow : ""}`}>🔻</span>
                                 </div>
                                 {open && (
                                     <div
                                         id="user-menu"
-                                        ref={menuRef} 
+                                        ref={menuRef}
                                         className={styles.dropdown}
                                         role="menu"
-                                        >
+                                    >
                                         <span className={styles.userEmail}>
                                             {user.email}
                                         </span>
                                         <Link href="/orders" role="menuitem" tabIndex={0} onClick={() => setOpen(false)}>My Orders</Link>
+                                        {user?.role === "admin" && (
+                                            <Link href="/admin" role="menuitem" onClick={() => setOpen(false)}>Admin</Link>
+                                        )}
                                         <button role="menuitem" onClick={handleLogout} className={styles.logout}>
                                             Logout
                                         </button>
@@ -154,14 +157,12 @@ export default function Header() {
                         ) : (
                             <Link href="/login">Login</Link>
                         )}
-
                         <Link href="/cart" className={styles.cart}>
                             🛒
                             {isMounted && totalQuantity > 0 && (
                                 <span className={styles.badge}>{totalQuantity}</span>
                             )}
                         </Link>
-
                     </nav>
                 </div>
             </div>
