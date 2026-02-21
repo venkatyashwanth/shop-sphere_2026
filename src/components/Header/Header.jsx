@@ -120,18 +120,22 @@ export default function Header() {
                                 ref={dropdownRef}
                             >
                                 <div className={styles.avatarWrapper}>
-                                    <button
-                                        ref={avatarRef}
-                                        className={styles.avatarBtn}
-                                        onClick={() => setOpen(prev => !prev)}
-                                        aria-haspopup="menu"
-                                        aria-label="User menu"
-                                        aria-expanded={open}
-                                        aria-controls="user-menu"
-                                    >
-                                        {user.email?.charAt(0).toUpperCase()}
-                                    </button>
-                                    <span className={`${styles.dropdownArrow} ${open ? styles.rotateArrow : ""}`}>🔻</span>
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        <button
+                                            ref={avatarRef}
+                                            onClick={() => setOpen(prev => !prev)}
+                                            className={styles.avatarBtn}
+                                            aria-haspopup="menu"
+                                            aria-label="User menu"
+                                            aria-expanded={open}
+                                            aria-controls="user-menu"
+                                        >
+                                            <span className={styles.avatarLetter}>
+                                                {user.email?.charAt(0).toUpperCase()}
+                                            </span>
+                                            <span className={`${styles.dropdownArrow} ${open ? styles.rotateArrow : ""}`}>🔻</span>
+                                        </button>
+                                    </div>
                                 </div>
                                 {open && (
                                     <div

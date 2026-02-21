@@ -27,7 +27,6 @@
 }
 
 .nav a {
-    // margin-left: 16px;
     font-size: 14px;
     text-decoration: none;
     color: var(--color-secondary);
@@ -160,30 +159,28 @@
 }
 
 .avatarBtn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
     display: flex;
     align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.avatarLetter {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
     justify-content: center;
-    font-size: 16px;
+    align-items: center;
     font-weight: 600;
+    font-size: 14px;
+    color: #fff;
     background: linear-gradient(135deg,
             var(--color-accent),
             #6c8cff);
-    color: #fff;
-    transition: background 0.2s ease;
-
-    &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    }
-
-    &:active {
-        transform: scale(0.96);
-    }
 }
 
 .dropdown {
@@ -254,8 +251,6 @@
     background: #f3f3f3;
     border-radius: 6px;
 }
-
-
 
 /* Fade animation */
 @keyframes dropdownIn {

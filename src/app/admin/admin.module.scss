@@ -1,0 +1,135 @@
+.adminWrapper {
+    display: flex;
+    flex-direction: column;
+    // min-height: 100vh;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.menuBtn {
+    margin-bottom: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 240px;
+    min-height: 100vh;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+    transition: left 0.25s ease;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sidebarOpen {
+    left: 0;
+}
+
+.sidebarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    a {
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background: #f0f0f0;
+        }
+
+        &.active {
+            background: rgba(0, 0, 0, 0.05);
+            color: #000;
+            font-weight: 500;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: -12px;
+                top: 8px;
+                bottom: 8px;
+                width: 3px;
+                border-radius: 4px;
+                background: #000;
+            }
+        }
+    }
+}
+
+.content {
+    flex: 1;
+    padding: 32px;
+}
+
+/* Desktop Enhancement */
+@media (min-width: 768px) {
+    .adminWrapper {
+        flex-direction: row;
+    }
+
+    .menuBtn {
+        display: none;
+    }
+
+    .overlay {
+        display: none;
+    }
+
+    .sidebar {
+        position: sticky;
+        top: 72px;
+        width: 220px;
+        min-height: auto;
+        box-shadow: none;
+        border-right: 1px solid #eee;
+        left: 0;
+        transition: none;
+    }
+
+    .closeBtn {
+        display: none;
+    }
+
+    .content {
+        padding: 32px;
+    }
+}
