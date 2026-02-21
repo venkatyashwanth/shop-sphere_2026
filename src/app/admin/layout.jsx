@@ -12,13 +12,26 @@ export default function AdminLayout({ children }) {
     const router = useRouter();
 
     const [open, setOpen] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
 
     const isActive = (path) => {
-        if(path === "/admin"){
+        if (path === "/admin") {
             return pathname === "/admin";
         }
         return pathname.startsWith(path)
     }
+
+    useEffect(() => {
+        const stored = localStorage.getItem("adminSidebarCollapsed");
+        if (stored) {
+            setCollapsed(stored === "true");
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("adminSidebarCollapsed", collapsed);
+    }, [collapsed])
+
 
     useEffect(() => {
         if (!loading) {
@@ -46,18 +59,36 @@ export default function AdminLayout({ children }) {
                 {open && (
                     <div className={styles.overlay} onClick={() => setOpen(false)} />
                 )}
-                <aside className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""}`}>
+                <aside className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""} ${collapsed ? styles.collapsed : ""}`}>
                     <div className={styles.sidebarHeader}>
-                        <h2 className={styles.logo}>Admin</h2>
+                        <h2 className={styles.logo}>{!collapsed && "Admin"}</h2>
+                        <button
+                            className={styles.collapseBtn}
+                            onClick={() => setCollapsed(prev => !prev)}
+                        >
+                            {collapsed ? "»" : "«"}
+                        </button>
                         <button className={styles.closeBtn}
                             onClick={() => setOpen(false)}
                         > ✕</button>
                     </div>
                     <nav className={styles.nav}>
-                        <Link href="/admin" className={isActive("/admin")? styles.active: ""} onClick={() => setOpen(false)}> Dashboard</Link>
-                        <Link href="/admin/products" className={isActive("/admin/products")? styles.active: ""} onClick={() => setOpen(false)}>Products</Link>
-                        <Link href="/admin/orders" className={isActive("/admin/orders")? styles.active: ""} onClick={() => setOpen(false)}>Orders</Link>
-                        <Link href="/" onClick={() => setOpen(false)}>← Back to Store</Link>
+                        <Link href="/admin" data-label="Dashboard" className={isActive("/admin") ? styles.active : ""} onClick={() => setOpen(false)}>
+                            <span className={styles.icon}>📊</span>
+                            <span className={styles.label}>Dashboard</span>
+                        </Link>
+                        <Link href="/admin/products" data-label="Products" className={isActive("/admin/products") ? styles.active : ""} onClick={() => setOpen(false)}>
+                            <span className={styles.icon}>📦</span>
+                            <span className={styles.label}>Products</span>
+                        </Link>
+                        <Link href="/admin/orders" data-label="Orders" className={isActive("/admin/orders") ? styles.active : ""} onClick={() => setOpen(false)}>
+                            <span className={styles.icon}>🧾</span>
+                            <span className={styles.label}>Orders</span>
+                        </Link>
+                        <Link href="/" data-label="Back to Store" onClick={() => setOpen(false)}>
+                            <span className={styles.icon}>←</span>
+                            <span className={styles.label}> Back to Store</span>
+                        </Link>
                     </nav>
                 </aside>
                 <main className={styles.content}>
