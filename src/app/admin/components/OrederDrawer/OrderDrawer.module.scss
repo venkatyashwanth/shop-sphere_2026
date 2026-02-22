@@ -1,0 +1,83 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background: #fff;
+    padding: 32px;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.detailBlock {
+    font-size: 14px;
+
+    strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 12px;
+        color: #666;
+    }
+}
+
+.itemsBlock {
+    margin-top: 10px;
+
+    .itemRow {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        padding: 6px 0;
+        border-bottom: 1px solid #f2f2f2;
+    }
+}
+
+/* Desktop Enhancement */
+@media (min-width: 768px) {
+    .drawer {
+        width: 380px;
+
+        .closeBtn {
+            display: block;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .drawer {
+        animation: none;
+    }
+}

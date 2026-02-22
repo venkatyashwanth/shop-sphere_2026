@@ -1,0 +1,71 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+
+    th,
+    td {
+        padding: 14px 16px;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    th {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        background: #fafafa;
+        font-weight: 500;
+        color: #555;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #000;
+        }
+    }
+
+    tr:not(:last-child) {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    tr:hover {
+        background: #f9f9f9;
+    }
+}
+
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.sortIcon {
+    position: absolute;
+    top: 50%;
+    margin-left: 6px;
+    font-size: 10px;
+    opacity: 0;
+    transform: translateY(-50%) rotate(0deg);
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+.activeSort {
+    opacity: 1;
+}
+
+.rotate {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.sortable:hover .sortIcon {
+    opacity: 0.6;
+}
+
+.highlight {
+    background: linear-gradient(to top,
+            rgba(255, 215, 0, 0.6) 40%,
+            transparent 40%);
+    padding: 0 2px;
+    border-radius: 4px;
+}

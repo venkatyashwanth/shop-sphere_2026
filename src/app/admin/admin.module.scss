@@ -1,7 +1,6 @@
 .adminWrapper {
     display: flex;
     flex-direction: column;
-    // min-height: 100vh;
 }
 
 .overlay {
@@ -164,71 +163,6 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-.filterBar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    margin: 10px;
-    // overflow-x: auto;
-}
-
-/* Pills */
-.filterBtn {
-    border: none;
-    background: #f2f2f2;
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-
-    &:hover {
-        background: #e6e6e6;
-    }
-
-    &.activeFilter {
-        background: #000;
-        color: #fff;
-    }
-}
-
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
-
-    th,
-    td {
-        padding: 14px 16px;
-        text-align: left;
-        font-size: 13px;
-    }
-
-    th {
-        cursor: pointer;
-        user-select: none;
-        position: relative;
-        background: #fafafa;
-        font-weight: 500;
-        color: #555;
-        transition: color 0.2s ease;
-
-        &:hover {
-            color: #000;
-        }
-    }
-
-    tr:not(:last-child) {
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    tr:hover {
-        background: #f9f9f9;
-    }
-}
-
 .clickableRow {
     cursor: pointer;
     transition: background 0.2s ease;
@@ -242,154 +176,6 @@
     position: relative;
 }
 
-.statusWrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.statusBadge {
-    position: relative;
-    min-width: 90px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    display: inline-block;
-    border: none;
-    cursor: pointer;
-
-    /* Placed */
-    &.status_placed {
-        background: rgba(0, 0, 0, 0.08);
-        color: #333;
-    }
-
-    /* Processing*/
-    &.status_processing {
-        background: rgba(255, 165, 0, 0.15);
-        color: #b26a00;
-    }
-
-    /* Shipped */
-    &.status_shipped {
-        background: rgba(0, 123, 255, 0.15);
-        color: #0056b3;
-    }
-
-    /* Delivered */
-    &.status_delivered {
-        background: rgba(0, 200, 83, 0.15);
-        color: #087f23;
-    }
-
-    /* Cancelled */
-    &.status_cancelled {
-        background: rgba(255, 0, 0, 0.12);
-        color: #b00020;
-    }
-}
-
-.statusDropdown {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background-color: #fff;
-    // background-color: red;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    min-width: 130px;
-    z-index: 10;
-    animation: dropdownFade 0.15s ease;
-
-    button {
-        background: none;
-        border: none;
-        padding: 8px 10px;
-        text-align: left;
-        border-radius: 6px;
-        font-size: 13px;
-        cursor: pointer;
-        transition: background 0.15s ease;
-
-        &:hover {
-            background: #f5f5f5;
-        }
-    }
-}
-
-
-@keyframes dropdownFade {
-    from {
-        opacity: 0;
-        transform: translateY(-4px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.spinner {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-top: 2px solid currentColor;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-    display: inline-block;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.hiddenText {
-    opacity: 0;
-}
-
-.backdrop {
-    position: fixed;
-    inset: 0;
-    backdrop-filter: blur(6px);
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 100;
-}
-
-.drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 100%;
-    background: #fff;
-    padding: 32px;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
-    z-index: 101;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    animation: slideIn 0.25s ease;
-}
-
-/* Slide animation */
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
 /* Close button */
 .closeBtn {
     position: absolute;
@@ -401,98 +187,12 @@
     cursor: pointer;
 }
 
-/* Detail blocks */
-.detailBlock {
-    font-size: 14px;
-
-    strong {
-        display: block;
-        margin-bottom: 4px;
-        font-size: 12px;
-        color: #666;
-    }
-}
-
-/* Items */
-.itemsBlock {
-    margin-top: 10px;
-
-    .itemRow {
-        display: flex;
-        justify-content: space-between;
-        font-size: 13px;
-        padding: 6px 0;
-        border-bottom: 1px solid #f2f2f2;
-    }
-}
-
-/* Search */
-.searchWrapper {
-    position: relative;
-    margin: 16px 8px;
-}
-
-.searchIcon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 14px;
-    color: #888;
-}
-
-.searchInput {
-    width: 100%;
-    padding: 10px 14px 10px 36px;
-    border-radius: 12px;
-    border: 1px solid #e5e5e5;
-    font-size: 14px;
-    transition: border 0.2s ease, box-shadow 0.2s ease;
-
-    &:focus {
-        outline: none;
-        border-color: #999;
-        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
-    }
-}
-
 .highlight {
-    // background: rgba(255, 230, 0, 0.5);
     background: linear-gradient(to top,
             rgba(255, 215, 0, 0.6) 40%,
             transparent 40%);
     padding: 0 2px;
     border-radius: 4px;
-}
-
-.sortable {
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-}
-
-.sortIcon {
-    position: absolute;
-    top: 50%;
-    margin-left: 6px;
-    font-size: 10px;
-    opacity: 0;
-    transform: translateY(-50%) rotate(0deg);
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
-}
-
-.activeSort {
-    opacity: 1;
-}
-
-.rotate {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.sortable:hover .sortIcon {
-    opacity: 0.6;
 }
 
 /* Desktop Enhancement */
@@ -592,14 +292,6 @@
 
     .closeBtn {
         display: none;
-    }
-
-    .drawer {
-        width: 380px;
-
-        .closeBtn {
-            display: block;
-        }
     }
 
     .content {
