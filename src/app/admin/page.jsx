@@ -22,6 +22,12 @@ export default function AdminPage() {
     const [updatingId, setUpdatingId] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [statusFilter, setStatusFilter] = useState("All");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
+    const [sortConfig, setSortConfig] = useState({
+        key: "createdAt",
+        direction: "desc"
+    })
 
     const STATUS_OPTIONS = [
         "Placed",
@@ -59,7 +65,56 @@ export default function AdminPage() {
         }
     }
 
-    const filteredOrders = statusFilter === "All" ? recentOrders : recentOrders.filter((order) => (order.status || "Placed") === statusFilter);
+    const filteredOrders = recentOrders.filter((order) =>
+        statusFilter === "All" ? true : (order.status || "Placed") === statusFilter)
+        .filter((order) => {
+            if (!debouncedSearch) return true;
+            const search = debouncedSearch.toLowerCase();
+            return (
+                order.id.toLowerCase().includes(search) ||
+                order.userEmail?.toLowerCase().includes(search)
+            )
+        })
+
+    const highlightText = (text, search) => {
+        if (!search) return text;
+        const regex = new RegExp(`(${search})`, "gi");
+        const parts = text.split(regex);
+        return parts.map((part, index) =>
+            part.toLowerCase() === search.toLowerCase() ? (
+                <mark key={index} className={styles.highlight}>
+                    {part}
+                </mark>
+            ) : (part)
+        )
+    }
+
+    const sortedOrders = [...filteredOrders].sort((a, b) => {
+        const { key, direction } = sortConfig;
+        let aValue = a[key];
+        let bValue = b[key];
+
+        if (key === "createdAt") {
+            aValue = new Date(aValue).getTime();
+            bValue = new Date(bValue).getTime();
+        }
+
+        if (typeof aValue === "string") {
+            aValue = aValue.toLowerCase();
+            bValue = bValue.toLowerCase();
+        }
+
+        if (aValue < bValue) return direction === "asc" ? -1 : 1;
+        if (aValue > bValue) return direction === "asc" ? 1 : -1;
+        return 0;
+    })
+
+    const handleSort = (key) => {
+        setSortConfig((prev) => ({
+            key,
+            direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc"
+        }))
+    }
 
 
     useEffect(() => {
@@ -126,6 +181,13 @@ export default function AdminPage() {
         }
     }, [user, router])
 
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            setDebouncedSearch(searchTerm);
+        }, 300)
+        return () => clearTimeout(timeOut);
+    }, [searchTerm])
+
     if (!user || user.role !== "admin") return null;
 
     return (
@@ -164,6 +226,14 @@ export default function AdminPage() {
             <div className={styles.recentSection}>
                 <h2>Recent Orders</h2>
                 <div className={styles.tableWrapper}>
+                    <div className={styles.searchWrapper}>
+                        <span className={styles.searchIcon}>🔍</span>
+                        <input type="text"
+                            placeholder="Search by Order ID or Email..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className={styles.searchInput} />
+                    </div>
                     <div className={styles.filterBar}>
                         {FILTER_OPTIONS.map((option) => (
                             <button
@@ -178,35 +248,40 @@ export default function AdminPage() {
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>
-                                    Order ID
+                                <th className={styles.sortable} onClick={() => handleSort("id")}>
+                                    <span>Order ID</span>
+                                    <span className={`${styles.sortIcon} ${sortConfig.key === "id" ? styles.activeSort : ""} ${sortConfig.key === "id" && sortConfig.direction === "asc" ? styles.rotate : "'"}`}>▼</span>
                                 </th>
-                                <th>
-                                    User
+                                <th className={styles.sortable} onClick={() => handleSort("userEmail")}>
+                                    <span>User</span>  
+                                    <span className={`${styles.sortIcon} ${sortConfig.key === "userEmail" ? styles.activeSort : ""} ${sortConfig.key === "userEmail" && sortConfig.direction === "asc" ? styles.rotate : "'"}`}>▼</span>
                                 </th>
-                                <th>
-                                    Total
+                                <th className={styles.sortable} onClick={() => handleSort("totalPrice")}>
+                                    <span>Total</span>
+                                    <span className={`${styles.sortIcon} ${sortConfig.key === "totalPrice" ? styles.activeSort : ""} ${sortConfig.key === "totalPrice" && sortConfig.direction === "asc" ? styles.rotate : "'"}`}>▼</span>
                                 </th>
-                                <th>
-                                    Status
+                                <th className={styles.sortable} onClick={() => handleSort("status")}>
+                                    <span>Status</span>
+                                    <span className={`${styles.sortIcon} ${sortConfig.key === "status" ? styles.activeSort : ""} ${sortConfig.key === "status" && sortConfig.direction === "asc" ? styles.rotate : "'"}`}>▼</span>
                                 </th>
-                                <th>
-                                    Date
+                                <th className={styles.sortable} onClick={() => handleSort("createdAt")}>
+                                    <span>Date</span>
+                                    <span className={`${styles.sortIcon} ${sortConfig.key === "createdAt" ? styles.activeSort : ""} ${sortConfig.key === "createdAt" && sortConfig.direction === "asc" ? styles.rotate : "'"}`}>▼</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredOrders.map((order) => (
+                            {sortedOrders.map((order) => (
                                 <tr
                                     key={order.id}
                                     onClick={() => setSelectedOrder(order)}
                                     className={styles.clickableRow}
                                 >
                                     <td>
-                                        {order.id.slice(0, 6)}...
+                                        {highlightText(order.id.slice(0, 6) + "...", debouncedSearch)}
                                     </td>
                                     <td>
-                                        {order.userEmail || "—"}
+                                        {order.userEmail ? highlightText(order.userEmail, debouncedSearch) : "—"}
                                     </td>
                                     <td>
                                         ₹ {order.totalPrice}
