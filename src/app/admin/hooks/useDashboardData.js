@@ -47,19 +47,6 @@ export function useDashboardData() {
                     users: usersSnap.size,
                     products: productsSnap.size,
                 }));
-                // const [ordersSnap, usersSnap, productsSnap] = await Promise.all([
-                //     getDocs(collection(db, "orders")),
-                //     getDocs(collection(db, "users")),
-                //     getDocs(collection(db, "products"))
-                // ])
-                // const normalizedOrders = ordersSnap.docs.map(normalizeFirestoreDoc);
-
-                // setStats({
-                //     orders: normalizedOrders.length,
-                //     revenue,
-                //     users: usersSnap.size,
-                //     products: productsSnap.size,
-                // })
             }
             catch (error) {
                 console.error("Dashboard fetch error:", error);

@@ -26,7 +26,7 @@ export default function ConfirmStep({
                 items,
                 totalPrice,
                 address,
-                status: "placed",
+                status: "Placed",
                 createdAt: serverTimestamp(),
             })
             dispatch(clearCart());
