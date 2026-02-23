@@ -15,6 +15,7 @@ import { highlightText } from "./utils/highlightText";
 import DashboardStats from "./components/DashboardStats/DashboardStats";
 import { usePagination } from "./hooks/usePagination";
 import Pagination from "./components/Pagination/Pagination";
+import RevenueAnalytics from "./components/RevenueAnalytics/RevenueAnalytics";
 
 const FILTER_OPTIONS = [
     "All",
@@ -51,6 +52,7 @@ export default function AdminPage() {
         <div>
             <h1 className={styles.pageTitle}>Dashboard</h1>
             <DashboardStats stats={stats} />
+            <RevenueAnalytics orders={orders}/>
             <div className={styles.recentSection}>
                 <h2>Recent Orders</h2>
                 <div className={styles.tableWrapper}>
