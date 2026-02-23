@@ -77,7 +77,6 @@ export default function OrdersTable({
                             className={styles.clickableRow}
                         >
                             <td>
-                                {console.log(order._search)}
                                 {highlightText(order.id.slice(0, 6) + "...", debouncedSearch)}
                             </td>
                             <td>
@@ -93,7 +92,6 @@ export default function OrdersTable({
                                 />
                             </td>
                             <td>
-                                {console.log(order.createdAt)}
                                 {order.createdAt
                                     ? new Date(order.createdAt).toLocaleDateString()
                                     : "—"}

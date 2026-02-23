@@ -1,0 +1,40 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 16px 0;
+
+    button {
+        border: none;
+        background: #f2f2f2;
+        padding: 6px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s ease;
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+
+        &.active {
+            background: #000;
+            color: #fff;
+        }
+    }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+    .pagination {
+        button {
+            transition: none;
+        }
+    }
+}
