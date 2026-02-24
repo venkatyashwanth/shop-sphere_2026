@@ -51,7 +51,7 @@ export default function AdminPage() {
     return (
         <div>
             <h1 className={styles.pageTitle}>Dashboard</h1>
-            <DashboardStats stats={stats} />
+            <DashboardStats stats={stats} loading={loading} />
             <RevenueAnalytics orders={orders}/>
             <div className={styles.recentSection}>
                 <h2>Recent Orders</h2>
@@ -71,6 +71,7 @@ export default function AdminPage() {
                         sortConfig={sortConfig}
                         onSort={handleSort}
                         highlightText={highlightText}
+                        loading={loading}
                     />
                     <div className={styles.paginationInfo}>
                         Showing {startIndex}–{endIndex} of {totalItems} orders

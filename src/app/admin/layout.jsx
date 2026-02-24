@@ -4,7 +4,6 @@ import styles from "./admin.module.scss";
 import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
 export default function AdminLayout({ children }) {
     const pathname = usePathname();
     const user = useSelector((state) => state.auth.user);

@@ -1,4 +1,5 @@
 import StatusDropdown from "../StatusDropdown/StatusDropdown";
+import Skeleton from "../ui/Skeleton/Skeleton";
 import styles from "./OrdersTable.module.scss";
 
 function SortableHeader({
@@ -30,8 +31,20 @@ export default function OrdersTable({
     onStatusChange,
     sortConfig,
     onSort,
-    highlightText
+    highlightText,
+    loading
 }) {
+    if (loading) {
+        return (
+            <div className={styles.tableWrapper}>
+                {[...Array(8)].map((_, i) => (
+                    <div key={i} className={styles.skeletonRow}>
+                        <Skeleton height="16px" width="90%" />
+                    </div>
+                ))}
+            </div>
+        );
+    }
     return (
         <>
             <table className={styles.table}>

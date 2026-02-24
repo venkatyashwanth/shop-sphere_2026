@@ -5,7 +5,7 @@
 }
 
 .statCard {
-    background-color: #fff;
+    background-color: var(--color-bg2);
     border-radius: 16px;
     padding: 20px;
     display: flex;
@@ -25,17 +25,24 @@
         margin: 0;
         font-size: 20px;
         font-weight: 600;
+        color: var(--color-txt2);
     }
 
     p {
         margin: 4px 0 0;
         font-size: 13px;
-        color: #666;
+        color: var(--color-lghttxt);
     }
 }
 
 .statIcon {
     font-size: 28px;
+}
+
+.skltn{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* Tablet Enhancement */

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { useTheme } from "@/app/hooks/useTheme";
 
 export default function Header() {
     const user = useSelector((state) => state.auth.user);
@@ -15,6 +16,7 @@ export default function Header() {
     const dropdownRef = useRef(null);
     const avatarRef = useRef(null);
     const menuRef = useRef(null);
+    const { theme, setTheme } = useTheme();
 
     useEffect(() => { setIsMounted(true) }, [])
 
@@ -98,7 +100,6 @@ export default function Header() {
                 <div className="container">
                     <div className={styles.skeletonNav}>
                         <div className={styles.skeletonLogo}></div>
-
                         <div className={styles.skeletonLinks}>
                             <div className={styles.skeletonLink}></div>
                             <div className={styles.skeletonLink}></div>
@@ -161,6 +162,12 @@ export default function Header() {
                         ) : (
                             <Link href="/login">Login</Link>
                         )}
+                        <button
+                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                            className={styles.themeToggle}
+                        >
+                            {theme === "dark" ? "🌙" : "☀️"}
+                        </button>
                         <Link href="/cart" className={styles.cart}>
                             🛒
                             {isMounted && totalQuantity > 0 && (

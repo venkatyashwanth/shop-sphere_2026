@@ -13,9 +13,11 @@ import {
 } from "recharts";
 import styles from "./RevenueAnalytics.module.scss";
 import { useState } from "react";
+import Skeleton from "../ui/Skeleton/Skeleton";
 export default function RevenueAnalytics({ orders }) {
     const [range, setRange] = useState("30days");
     const [chartType, setChartType] = useState("line");
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     const { chartData, comparison } = useMemo(() => {
         const revenueMap = {};
         const now = new Date();
@@ -85,8 +87,14 @@ export default function RevenueAnalytics({ orders }) {
         };
     }, [orders, range]);
 
-    if (!chartData.length) return null;
-
+    if (!chartData.length) {
+        return (
+            <div className={styles.card}>
+                <Skeleton height="24px" width="150px" mb="10px"/>
+                <Skeleton height="300px" />
+            </div>
+        );
+    }
     return (
         <div className={styles.card}>
             <div className={styles.header}>
@@ -169,11 +177,11 @@ export default function RevenueAnalytics({ orders }) {
 
                         <CartesianGrid
                             strokeDasharray="3 3"
-                            stroke="#eee"
+                            stroke={isDark ? "#333" : "#eee"}
                         />
 
-                        <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                        <YAxis tick={{ fontSize: 11 }} />
+                        <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke={isDark ? "#aaa" : "#666"} />
+                        <YAxis tick={{ fontSize: 11 }} stroke={isDark ? "#aaa" : "#666"} />
 
                         <Tooltip
                             formatter={(value) => `₹${value}`}
@@ -190,9 +198,9 @@ export default function RevenueAnalytics({ orders }) {
                     </AreaChart>
                 ) : (
                     <BarChart data={chartData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-                        <YAxis tick={{ fontSize: 11 }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#333" : "#eee"} />
+                        <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke={isDark ? "#aaa" : "#666"} />
+                        <YAxis tick={{ fontSize: 11 }} stroke={isDark ? "#aaa" : "#666"} />
                         <Tooltip />
                         <Bar
                             dataKey="revenue"
