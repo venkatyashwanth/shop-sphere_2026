@@ -32,7 +32,8 @@ export default function OrdersTable({
     sortConfig,
     onSort,
     highlightText,
-    loading
+    loading,
+    updatedIds
 }) {
     if (loading) {
         return (
@@ -87,7 +88,10 @@ export default function OrdersTable({
                         <tr
                             key={order.id}
                             onClick={() => onSelect(order)}
-                            className={styles.clickableRow}
+                            className={`${updatedIds?.includes(order.id)
+                                    ? styles.rowUpdated
+                                    : ""
+                                }`}
                         >
                             <td>
                                 {highlightText(order.id.slice(0, 6) + "...", debouncedSearch)}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export function useDashboardData() {
     const [orders, setOrders] = useState([]);
+    const [updatedIds, setUpdatedIds] = useState([]);
     const [stats, setStats] = useState({
         orders: 0,
         revenue: 0,
@@ -15,6 +16,7 @@ export function useDashboardData() {
     })
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [toastMessage, setToastMessage] = useState(null);
 
     useEffect(() => {
         let unsubscribe;
@@ -28,7 +30,26 @@ export function useDashboardData() {
                     normalizedOrders.forEach((order) => {
                         revenue += order.totalPrice || 0;
                     });
-                    setOrders(normalizedOrders);
+                    // setOrders(normalizedOrders);
+                    setOrders((prevOrders) => {
+                        const prevIds = new Set(
+                            prevOrders.map((o) => o.id)
+                        );
+
+                        const newOrderIds = [];
+
+                        normalizedOrders.forEach((order) => {
+                            if (!prevIds.has(order.id)) {
+                                newOrderIds.push(order.id);
+                            }
+                        });
+
+                        if (newOrderIds.length > 0 && prevOrders.length > 0) {
+                            setToastMessage("New Order Received");
+                        }
+
+                        return normalizedOrders;
+                    });
                     setStats((prev) => ({
                         ...prev,
                         orders: normalizedOrders.length,
@@ -57,7 +78,7 @@ export function useDashboardData() {
         fetchDashboardData();
 
         return () => {
-            if(unsubscribe) unsubscribe();
+            if (unsubscribe) unsubscribe();
         }
     }, [])
 
@@ -67,6 +88,9 @@ export function useDashboardData() {
         stats,
         selectedOrder,
         setSelectedOrder,
-        loading
+        loading,
+        updatedIds,
+        toastMessage,
+        setToastMessage
     }
 }

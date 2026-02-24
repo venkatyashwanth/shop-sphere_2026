@@ -75,3 +75,38 @@
   padding: 16px;
   border-bottom: 1px solid var(--border);
 }
+
+.rowUpdated {
+  animation: highlightFade 1.2s ease;
+}
+
+@keyframes highlightFade {
+  0% {
+    background: rgba(0, 200, 83, 0.25);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* Dark mode */
+// [data-theme="dark"] .rowUpdated {
+//   animation: highlightFadeDark 1.2s ease;
+// }
+
+@keyframes highlightFadeDark {
+  0% {
+    background: rgba(0, 200, 83, 0.2);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .rowUpdated {
+    animation: none;
+    background: rgba(0, 200, 83, 0.15);
+  }
+}

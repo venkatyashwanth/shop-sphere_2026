@@ -16,6 +16,7 @@ import DashboardStats from "./components/DashboardStats/DashboardStats";
 import { usePagination } from "./hooks/usePagination";
 import Pagination from "./components/Pagination/Pagination";
 import RevenueAnalytics from "./components/RevenueAnalytics/RevenueAnalytics";
+import Toast from "./components/ui/Toast/Toast";
 
 const FILTER_OPTIONS = [
     "All",
@@ -28,11 +29,11 @@ const FILTER_OPTIONS = [
 export default function AdminPage() {
     const user = useSelector(state => state.auth.user);
     const router = useRouter();
-    const { orders, setOrders, stats, selectedOrder, setSelectedOrder, loading } = useDashboardData();
+    const { orders, setOrders, stats, selectedOrder, setSelectedOrder, loading, updatedIds, toastMessage, setToastMessage } = useDashboardData();
     const { searchTerm, setSearchTerm, statusFilter, setStatusFilter, filteredOrders, debouncedSearch } = useOrderFilters(orders);
     const { sortConfig, handleSort, sortedData: sortedOrders } = useSorting(filteredOrders);
     const { currentPage, totalPages, paginatedData, goToPage, startIndex, endIndex, totalItems } = usePagination(sortedOrders, 8);
-
+    
     const handleOptimisticUpdate = (orderId, newStatus) =>
         setOrders((prev) =>
             prev.map((o) =>
@@ -72,12 +73,18 @@ export default function AdminPage() {
                         onSort={handleSort}
                         highlightText={highlightText}
                         loading={loading}
+                        updatedIds={updatedIds}
                     />
                     <div className={styles.paginationInfo}>
                         Showing {startIndex}–{endIndex} of {totalItems} orders
                     </div>
                     <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={goToPage} />
                     <OrderDrawer order={selectedOrder} onClose={() => setSelectedOrder(null)} />
+                    <Toast
+                        message={toastMessage}
+                        visible={!!toastMessage}
+                        onClose={() => setToastMessage(null)}
+                    />
                 </div>
             </div>
         </div>
