@@ -46,7 +46,6 @@ export default function Order() {
         fetchOrders();
     }, [user])
 
-    // if(loading) return <p className={styles.loading}>Loading Orders...</p>
     if (loading) return (
         <div className={styles.wrapper}>
             <h1>My Orders</h1>
@@ -89,7 +88,7 @@ export default function Order() {
             <h1>My Orders</h1>
             <div className={`${styles.fadeIn} ${styles.animWrapper}`}>
                 {orders.map((order) => (
-                    <div key={order.id} className={styles.card}>
+                    <div key={order.id} className={styles.card} onClick={() => router.push(`/orders/${order.id}`)}>
                         <div className={styles.header}>
                             <div>
                                 <p className={styles.orderId}>

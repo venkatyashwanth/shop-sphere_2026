@@ -1,0 +1,91 @@
+.wrapper {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+
+    thead {
+        background: rgba(0, 0, 0, 0.02);
+    }
+
+    th,
+    td {
+        padding: 14px 16px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    th {
+        font-weight: 600;
+        color: var(--table-text);
+    }
+
+    tbody tr {
+        border-top: 1px solid var(--border);
+        transition: background 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+    }
+
+    img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .edit,
+    .delete {
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: none;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .edit {
+        background: #3b82f6;
+        color: #fff;
+
+        &:hover {
+            background: #2563eb;
+        }
+    }
+
+    .delete {
+        background: #ef4444;
+        color: white;
+
+        &:hover {
+            background: #dc2626;
+        }
+    }
+
+    .rowHighlight {
+        animation: rowPulse 1.2s ease;
+    }
+
+    @keyframes rowPulse {
+        0% {
+            background: rgba(59, 130, 246, 0.25);
+        }
+
+        100% {
+            background: transparent;
+        }
+    }
+}

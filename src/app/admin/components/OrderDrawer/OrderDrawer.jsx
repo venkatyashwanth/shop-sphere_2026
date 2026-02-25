@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import styles from "./OrderDrawer.module.scss";
+import Link from "next/link";
 
 export default function OrderDrawer({ order, onClose }) {
     useEffect(() => {
@@ -56,6 +57,9 @@ export default function OrderDrawer({ order, onClose }) {
                             <span>x{item.quantity}</span>
                         </div>
                     ))}
+                </div>
+                <div>
+                    <Link href={`/orders/${order.id}`}>View</Link>
                 </div>
             </div>
         </>
