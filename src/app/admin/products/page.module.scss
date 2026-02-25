@@ -20,3 +20,21 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 }
+
+.tableWrapper {
+    transition: opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.fade {
+    opacity: 0.5;
+    transform: translateY(4px);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .fade {
+        opacity: 1;
+        transform: none;
+    }
+}

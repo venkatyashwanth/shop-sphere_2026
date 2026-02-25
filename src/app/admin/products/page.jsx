@@ -11,6 +11,7 @@ export default function AdminProductsPage() {
     const [editingProduct, setEditingProduct] = useState(null);
     const [highlightId, setHighlightId] = useState(null);
     const [categoryFilter, setCategoryFilter] = useState("All");
+    const [isFading, setIsFading] = useState(false);
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -23,7 +24,7 @@ export default function AdminProductsPage() {
             }
         );
         return () => unsubscribe();
-    })
+    },[])
 
     const handleEdit = (product) => {
         setEditingProduct(product);
@@ -49,6 +50,7 @@ export default function AdminProductsPage() {
     }, {})
 
     const uniqueCategories = ["All", ...Object.keys(categoryCounts)];
+    
 
     const filteredProducts = categoryFilter === "All" ? products : products.filter((p) => p.category === categoryFilter);
 
@@ -60,7 +62,14 @@ export default function AdminProductsPage() {
             <div className={styles.filterBar}>
                 <select
                     value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setIsFading(true);
+                        setTimeout(() => {
+                            setCategoryFilter(value);
+                            setIsFading(false);
+                        }, 150)
+                    }}
                     className={styles.filterSelect}
                 >
                     {uniqueCategories.map((cat) => (
@@ -72,12 +81,14 @@ export default function AdminProductsPage() {
                     ))}
                 </select>
             </div>
-            <ProductTable
-                products={filteredProducts}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                highlightId={highlightId}
-            />
+            <div className={`${styles.tableWrapper} ${isFading ? styles.fade : ""}`}>
+                <ProductTable
+                    products={filteredProducts}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    highlightId={highlightId}
+                />
+            </div>
         </div>
     )
 }
