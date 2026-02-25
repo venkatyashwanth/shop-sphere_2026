@@ -91,12 +91,6 @@ export default function ProductForm({
                     required
                 />
 
-                {/* <input
-                    name="category"
-                    placeholder="Category"
-                    value={form.category}
-                    onChange={handleChange}
-                /> */}
                 <select name="category" value={form.category} onChange={handleChange} required className={styles.select}>
                     <option value="" disabled>
                         Select Category

@@ -9,8 +9,8 @@ import ProductTable from "./components/ProductTable";
 export default function AdminProductsPage() {
     const [products, setProducts] = useState([]);
     const [editingProduct, setEditingProduct] = useState(null);
-    const [highlightId,setHighlightId] = useState(null);
-    const [categoryFilter,setCategoryFilter] = useState("All");
+    const [highlightId, setHighlightId] = useState(null);
+    const [categoryFilter, setCategoryFilter] = useState("All");
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -30,7 +30,7 @@ export default function AdminProductsPage() {
         setHighlightId(product.id);
         setTimeout(() => {
             setHighlightId(null);
-        },1200);
+        }, 1200);
     }
 
     const handleDelete = async (id) => {
@@ -42,20 +42,33 @@ export default function AdminProductsPage() {
         await deleteDoc(doc(db, "products", id));
     };
 
-    const uniqueCategories = [
-        "All", ...new Set(products.map((p) => p.category))
-    ]
+    const categoryCounts = products.reduce((acc, product) => {
+        const cat = product.category || "Uncategorized";
+        acc[cat] = (acc[cat] || 0) + 1;
+        return acc;
+    }, {})
+
+    const uniqueCategories = ["All", ...Object.keys(categoryCounts)];
 
     const filteredProducts = categoryFilter === "All" ? products : products.filter((p) => p.category === categoryFilter);
+
 
     return (
         <div className={styles.wrapper}>
             <h1>Products page</h1>
-            <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} setHighlightId={setHighlightId}/>
+            <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} setHighlightId={setHighlightId} />
             <div className={styles.filterBar}>
-                <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className={styles.filterSelect}>
+                <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className={styles.filterSelect}
+                >
                     {uniqueCategories.map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
+                        <option key={cat} value={cat}>
+                            {cat === "All"
+                                ? `All (${products.length})`
+                                : `${cat} (${categoryCounts[cat]})`}
+                        </option>
                     ))}
                 </select>
             </div>
