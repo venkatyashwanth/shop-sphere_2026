@@ -39,6 +39,23 @@
         resize: vertical;
     }
 
+    .select {
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--form-bg);
+        color: var(--form-text);
+        font-size: 14px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+    }
+
     .submit {
         align-self: flex-start;
         padding: 10px 18px;

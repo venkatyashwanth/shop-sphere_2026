@@ -3,6 +3,14 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/fi
 import { useEffect, useState } from "react";
 import styles from "./ProductForm.module.scss";
 
+const CATEGORY_OPTIONS = [
+  "Smartphones",
+  "Laptops",
+  "Accessories",
+  "Wearables",
+  "Audio",
+];
+
 export default function ProductForm({
     editingProduct,
     clearEdit,
@@ -83,12 +91,22 @@ export default function ProductForm({
                     required
                 />
 
-                <input
+                {/* <input
                     name="category"
                     placeholder="Category"
                     value={form.category}
                     onChange={handleChange}
-                />
+                /> */}
+                <select name="category" value={form.category} onChange={handleChange} required className={styles.select}>
+                    <option value="" disabled>
+                        Select Category
+                    </option>
+                    {CATEGORY_OPTIONS.map((category) => (
+                        <option key={category} value={category}>
+                            {category}
+                        </option>
+                    ))}
+                </select>
 
                 <input
                     name="image"
