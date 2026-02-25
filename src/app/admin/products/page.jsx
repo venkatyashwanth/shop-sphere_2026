@@ -12,6 +12,7 @@ export default function AdminProductsPage() {
     const [highlightId, setHighlightId] = useState(null);
     const [categoryFilter, setCategoryFilter] = useState("All");
     const [isFading, setIsFading] = useState(false);
+    const [searchTerm,setSearchTerm] = useState("");
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -52,21 +53,42 @@ export default function AdminProductsPage() {
     const uniqueCategories = ["All", ...Object.keys(categoryCounts)];
     
 
-    const filteredProducts = categoryFilter === "All" ? products : products.filter((p) => p.category === categoryFilter);
-
+    // const filteredProducts = categoryFilter === "All" ? products : products.filter((p) => p.category === categoryFilter);
+    const filteredProducts = products
+        .filter((product) => {
+            if(categoryFilter === "All") return true;
+            return product.category === categoryFilter;
+        })
+        .filter((product) => {
+            if(!searchTerm) return true;
+            const search = searchTerm.toLowerCase();
+            return(
+                product.title?.toLowerCase().includes(search) ||
+                product.category?.toLowerCase().includes(search) ||
+                String(product.price).includes(search)
+            )
+        })
 
     return (
         <div className={styles.wrapper}>
             <h1>Products page</h1>
             <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} setHighlightId={setHighlightId} />
             <div className={styles.filterBar}>
+                <input 
+                    type="text" 
+                    placeholder="Search products..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={styles.searchInput}
+                    />
                 <select
                     value={categoryFilter}
                     onChange={(e) => {
                         const value = e.target.value;
+                        setCategoryFilter(value);
                         setIsFading(true);
                         setTimeout(() => {
-                            setCategoryFilter(value);
+                            // setCategoryFilter(value);
                             setIsFading(false);
                         }, 150)
                     }}
