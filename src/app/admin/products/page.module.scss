@@ -51,6 +51,51 @@
     transform: translateY(4px);
 }
 
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pageInfo {
+    font-size: 14px;
+    color: var(--form-text);
+}
+
+.pageControls {
+    display: flex;
+    gap: 6px;
+
+    button {
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        color: var(--form-text);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        &.activePage {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+    }
+}
+
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .fade {

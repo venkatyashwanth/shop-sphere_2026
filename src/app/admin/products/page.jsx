@@ -12,7 +12,9 @@ export default function AdminProductsPage() {
     const [highlightId, setHighlightId] = useState(null);
     const [categoryFilter, setCategoryFilter] = useState("All");
     const [isFading, setIsFading] = useState(false);
-    const [searchTerm,setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const PRODUCTS_PER_PAGE = 6;
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -25,7 +27,7 @@ export default function AdminProductsPage() {
             }
         );
         return () => unsubscribe();
-    },[])
+    }, [])
 
     const handleEdit = (product) => {
         setEditingProduct(product);
@@ -51,36 +53,47 @@ export default function AdminProductsPage() {
     }, {})
 
     const uniqueCategories = ["All", ...Object.keys(categoryCounts)];
-    
 
-    // const filteredProducts = categoryFilter === "All" ? products : products.filter((p) => p.category === categoryFilter);
     const filteredProducts = products
         .filter((product) => {
-            if(categoryFilter === "All") return true;
+            if (categoryFilter === "All") return true;
             return product.category === categoryFilter;
         })
         .filter((product) => {
-            if(!searchTerm) return true;
+            if (!searchTerm) return true;
             const search = searchTerm.toLowerCase();
-            return(
+            return (
                 product.title?.toLowerCase().includes(search) ||
                 product.category?.toLowerCase().includes(search) ||
                 String(product.price).includes(search)
             )
         })
 
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [categoryFilter, searchTerm]);
+
+    const totalProducts = filteredProducts.length;
+    const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    const paginatedProducts = filteredProducts.slice(
+        startIndex,
+        startIndex + PRODUCTS_PER_PAGE
+    );
+
+
     return (
         <div className={styles.wrapper}>
             <h1>Products page</h1>
             <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} setHighlightId={setHighlightId} />
             <div className={styles.filterBar}>
-                <input 
-                    type="text" 
-                    placeholder="Search products..." 
-                    value={searchTerm} 
+                <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className={styles.searchInput}
-                    />
+                />
                 <select
                     value={categoryFilter}
                     onChange={(e) => {
@@ -105,11 +118,56 @@ export default function AdminProductsPage() {
             </div>
             <div className={`${styles.tableWrapper} ${isFading ? styles.fade : ""}`}>
                 <ProductTable
-                    products={filteredProducts}
+                    products={paginatedProducts}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                     highlightId={highlightId}
                 />
+                <div className={styles.pagination}>
+                    <span className={styles.pageInfo}>
+                        Showing {" "}
+                        {totalProducts === 0 ? 0 : startIndex + 1}
+                        - {" "}
+                        {Math.min(
+                            startIndex + PRODUCTS_PER_PAGE,
+                            totalProducts
+                        )}{" "}
+                        of {totalProducts} products
+                    </span>
+                    <div className={styles.pageControls}>
+                        <button
+                            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Prev
+                        </button>
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index}
+                                className={
+                                    currentPage === index + 1
+                                        ? styles.activePage
+                                        : ""
+                                }
+                                onClick={() =>
+                                    setCurrentPage(index + 1)
+                                }
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() =>
+                                setCurrentPage((p) =>
+                                    Math.min(p + 1, totalPages)
+                                )
+                            }
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
