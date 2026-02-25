@@ -6,6 +6,7 @@ import styles from "./ProductForm.module.scss";
 export default function ProductForm({
     editingProduct,
     clearEdit,
+    setHighlightId
 }) {
     const [form, setForm] = useState({
         title: "",
@@ -39,6 +40,7 @@ export default function ProductForm({
                     form
                 );
                 clearEdit();
+                setHighlightId(editingProduct.id);
             } else {
                 await addDoc(collection(db, "products"), {
                     ...form,

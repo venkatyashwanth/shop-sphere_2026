@@ -44,7 +44,7 @@ export default function AdminProductsPage() {
     return (
         <div className={styles.wrapper}>
             <h1>Products page</h1>
-            <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} />
+            <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} setHighlightId={setHighlightId}/>
             <ProductTable
                 products={products}
                 onEdit={handleEdit}
