@@ -82,17 +82,33 @@
     .rowHighlight {
         animation: rowPulse 1.2s ease;
     }
-    
-    .inactiveRow{
+
+    .inactiveRow {
         opacity: 0.5;
-        td{
+
+        td {
             text-decoration: none;
         }
-        &:hover{
+
+        &:hover {
             opacity: 0.65;
         }
     }
 
+    .titleCell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .inactiveBadge {
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        font-weight: 500;
+    }
 
     @keyframes rowPulse {
         0% {
@@ -105,24 +121,27 @@
     }
 }
 
-.switch{
+.switch {
     position: relative;
     display: inline-block;
     width: 42px;
     height: 22px;
-    input{
+
+    input {
         opacity: 0;
         width: 0;
         height: 0;
     }
-    .slider{
+
+    .slider {
         position: absolute;
         cursor: pointer;
         inset: 0;
         background-color: #ccc;
         border-radius: 50px;
         transition: 0.3s;
-        &::before{
+
+        &::before {
             position: absolute;
             content: '';
             height: 18px;
@@ -135,9 +154,11 @@
         }
     }
 }
-.switch input:checked + .slider{
+
+.switch input:checked+.slider {
     background-color: #3b82f6;
 }
-.switch input:checked + .slider::before {
-  transform: translateX(20px);
+
+.switch input:checked+.slider::before {
+    transform: translateX(20px);
 }

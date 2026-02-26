@@ -38,7 +38,16 @@ export default function ProductTable({
                                     alt={product.title}
                                 />
                             </td>
-                            <td>{product.title}</td>
+                            <td>
+                                <div className={styles.titleCell}>
+                                    {product.title}
+                                    {product.active === false && (
+                                        <span className={styles.inactiveBadge}>
+                                            Inactive
+                                        </span>
+                                    )}
+                                </div>
+                            </td>
                             <td>₹ {product.price}</td>
                             <td>{product.category}</td>
                             <td className={styles.actions}>
