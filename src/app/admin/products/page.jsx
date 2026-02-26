@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import ProductForm from "./components/ProductForm";
 import { normalizeFirestoreDoc } from "@/lib/normalizeFirestoreDoc";
@@ -45,6 +45,17 @@ export default function AdminProductsPage() {
 
         await deleteDoc(doc(db, "products", id));
     };
+
+    const handleToggleActive = async(product) => {
+        try{
+            console.log('sa')
+            await updateDoc(doc(db,"products",product.id),{
+                active: !product.active
+            });
+        }catch(err){
+            console.error(err);
+        }
+    }
 
     const categoryCounts = products.reduce((acc, product) => {
         const cat = product.category || "Uncategorized";
@@ -122,6 +133,7 @@ export default function AdminProductsPage() {
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                     highlightId={highlightId}
+                    onToggleActive={handleToggleActive}
                 />
                 <div className={styles.pagination}>
                     <span className={styles.pageInfo}>

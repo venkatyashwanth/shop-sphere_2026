@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
         try {
             const snapshot = await getDocs(collection(db, "products"));
             const products = snapshot.docs.map((docSnap) => normalizeFirestoreDoc(docSnap))
-            return products;
+            return products.filter(p => p.active !== false);
         } catch (error) {
             return rejectWithValue(error.message);
         }

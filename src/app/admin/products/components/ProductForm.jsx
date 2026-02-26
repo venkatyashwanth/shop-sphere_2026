@@ -53,6 +53,7 @@ export default function ProductForm({
                 await addDoc(collection(db, "products"), {
                     ...form,
                     price: Number(form.price),
+                    active: true,
                     createdAt: serverTimestamp(),
                 });
             }

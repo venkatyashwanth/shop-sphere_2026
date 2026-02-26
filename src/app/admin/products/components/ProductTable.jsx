@@ -4,7 +4,8 @@ export default function ProductTable({
     products,
     onEdit,
     onDelete,
-    highlightId
+    highlightId,
+    onToggleActive
 }) {
     useEffect(() => {
         console.log(highlightId);
@@ -19,6 +20,7 @@ export default function ProductTable({
                         <th>Price</th>
                         <th>Category</th>
                         <th>Actions</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
 
@@ -56,6 +58,16 @@ export default function ProductTable({
                                 >
                                     Delete
                                 </button>
+                            </td>
+                            <td>
+                                <label className={styles.switch}>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={product.active ?? true}
+                                        onChange={() => onToggleActive(product)}
+                                        />
+                                    <span className={styles.slider}></span>
+                                </label>
                             </td>
                         </tr>
                     ))}
