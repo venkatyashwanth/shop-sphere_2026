@@ -149,9 +149,12 @@ export default function Header() {
                                             {user.email}
                                         </span>
                                         <Link href="/orders" role="menuitem" tabIndex={0} onClick={() => setOpen(false)}>My Orders</Link>
+
+
                                         {user?.role === "admin" && (
                                             <Link href="/admin" role="menuitem" onClick={() => setOpen(false)}>Admin</Link>
                                         )}
+
                                         <button role="menuitem" onClick={handleLogout} className={styles.logout}>
                                             Logout
                                         </button>
@@ -162,12 +165,19 @@ export default function Header() {
                         ) : (
                             <Link href="/login">Login</Link>
                         )}
-                        <button
-                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                            className={styles.themeToggle}
-                        >
-                            {theme === "dark" ? "🌙" : "☀️"}
-                        </button>
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span>{theme === "dark" ? "🌚" : "🌞"}</span>
+                            <label className={styles.switch}>
+                                <input
+                                    type="checkbox"
+                                    role="switch"
+                                    aria-label="Toggle dark mode"
+                                    checked={theme === "dark"}
+                                    onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+                                />
+                                <span className={styles.slider}></span>
+                            </label>
+                        </div>
                         <Link href="/cart" className={styles.cart}>
                             🛒
                             {isMounted && totalQuantity > 0 && (

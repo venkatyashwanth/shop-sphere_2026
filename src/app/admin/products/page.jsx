@@ -14,7 +14,7 @@ export default function AdminProductsPage() {
     const [isFading, setIsFading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [statusFilter,setStatusFilter] = useState("All");
+    const [statusFilter, setStatusFilter] = useState("All");
     const PRODUCTS_PER_PAGE = 6;
 
     useEffect(() => {
@@ -47,13 +47,13 @@ export default function AdminProductsPage() {
         await deleteDoc(doc(db, "products", id));
     };
 
-    const handleToggleActive = async(product) => {
-        try{
+    const handleToggleActive = async (product) => {
+        try {
             console.log('sa')
-            await updateDoc(doc(db,"products",product.id),{
+            await updateDoc(doc(db, "products", product.id), {
                 active: !product.active
             });
-        }catch(err){
+        } catch (err) {
             console.error(err);
         }
     }
@@ -81,9 +81,9 @@ export default function AdminProductsPage() {
             )
         })
         .filter((product) => {
-            if(statusFilter === "All") return true;
-            if(statusFilter === "Active") return product.active !== false;
-            if(statusFilter === "Inactive") return product.active === false;
+            if (statusFilter === "All") return true;
+            if (statusFilter === "Active") return product.active !== false;
+            if (statusFilter === "Inactive") return product.active === false;
         })
 
     useEffect(() => {
@@ -98,6 +98,37 @@ export default function AdminProductsPage() {
         startIndex + PRODUCTS_PER_PAGE
     );
 
+    const activeCount = products.filter(p => p.active !== false).length;
+    const inactiveCount = products.filter(p => p.active === false).length;
+    const [selectedIds, setSelectedIds] = useState([]);
+
+    const toggleSelect = (id) => {
+        setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
+    }
+    const toggleSelectAll = () => {
+        const currentPageIds = paginatedProducts.map(p => p.id);
+        const allSelected = currentPageIds.every(id => selectedIds.includes(id));
+        if (allSelected) {
+            setSelectedIds(prev => prev.filter(id => !currentPageIds.includes(id)));
+        } else {
+            setSelectedIds(prev => [...new Set([...prev, ...currentPageIds])])
+        }
+    }
+
+    const bulkUpdateStatus = async (activeValue) => {
+        try {
+            await Promise.all(
+                selectedIds.map(id =>
+                    updateDoc(doc(db, "products", id), {
+                        active: activeValue
+                    })
+                )
+            )
+            setSelectedIds([])
+        } catch (err) {
+            console.err(err);
+        }
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -131,14 +162,20 @@ export default function AdminProductsPage() {
                         </option>
                     ))}
                 </select>
-                <select 
+                <select
                     value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)} 
+                    onChange={(e) => setStatusFilter(e.target.value)}
                     className={styles.filterSelect}
-                    >
-                        <option value="All">All Status</option>
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
+                >
+                    <option value="All">
+                        All ({products.length})
+                    </option>
+                    <option value="Active">
+                        Active ({activeCount})
+                    </option>
+                    <option value="Inactive">
+                        Inactive ({inactiveCount})
+                    </option>
                 </select>
             </div>
             <div className={`${styles.tableWrapper} ${isFading ? styles.fade : ""}`}>
@@ -148,6 +185,10 @@ export default function AdminProductsPage() {
                     onDelete={handleDelete}
                     highlightId={highlightId}
                     onToggleActive={handleToggleActive}
+                    selectedIds={selectedIds}
+                    toggleSelect={toggleSelect}
+                    toggleSelectAll={toggleSelectAll}
+                    bulkUpdateStatus={bulkUpdateStatus}
                 />
                 <div className={styles.pagination}>
                     <span className={styles.pageInfo}>

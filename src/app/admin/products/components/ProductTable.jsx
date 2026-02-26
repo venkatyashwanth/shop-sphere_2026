@@ -5,13 +5,29 @@ export default function ProductTable({
     onEdit,
     onDelete,
     highlightId,
-    onToggleActive
+    onToggleActive,
+    selectedIds,
+    toggleSelect,
+    toggleSelectAll,
+    bulkUpdateStatus
 }) {
-    useEffect(() => {
-        console.log(highlightId);
-    },[highlightId])
     return (
         <div className={styles.wrapper}>
+            {selectedIds.length > 0 && (
+                <div className={styles.bulkActions}>
+                    <span>{selectedIds.length} selected</span>
+                    <button
+                        onClick={() => bulkUpdateStatus(true)}
+                    >
+                        Activate
+                    </button>
+                    <button
+                        onClick={() => bulkUpdateStatus(false)}
+                    >
+                        Deactivate
+                    </button>
+                </div>
+            )}
             <table className={styles.table}>
                 <thead>
                     <tr>
@@ -21,6 +37,18 @@ export default function ProductTable({
                         <th>Category</th>
                         <th>Actions</th>
                         <th>Status</th>
+                        <th>
+                            <input
+                                type="checkbox"
+                                onChange={toggleSelectAll}
+                                checked={
+                                    products.length > 0 &&
+                                    products.every(p =>
+                                        selectedIds.includes(p.id)
+                                    )
+                                }
+                            />
+                        </th>
                     </tr>
                 </thead>
 
@@ -28,8 +56,8 @@ export default function ProductTable({
                     {products.map((product) => (
                         <tr key={product.id}
                             className={
-                                `${highlightId === product.id ? styles.rowHighlight : "" }
-                                 ${product.active === false? styles.inactiveRow: ""}`
+                                `${highlightId === product.id ? styles.rowHighlight : ""}
+                                 ${product.active === false ? styles.inactiveRow : ""}`
                             }
                         >
                             <td>
@@ -69,13 +97,20 @@ export default function ProductTable({
                             </td>
                             <td>
                                 <label className={styles.switch}>
-                                    <input 
-                                        type="checkbox" 
+                                    <input
+                                        type="checkbox"
                                         checked={product.active ?? true}
                                         onChange={() => onToggleActive(product)}
-                                        />
+                                    />
                                     <span className={styles.slider}></span>
                                 </label>
+                            </td>
+                            <td>
+                                <input 
+                                    type="checkbox" 
+                                    checked={selectedIds.includes(product.id)}
+                                    onChange={() => toggleSelect(product.id)}
+                                    />
                             </td>
                         </tr>
                     ))}
