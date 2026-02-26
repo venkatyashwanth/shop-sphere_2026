@@ -82,6 +82,17 @@
     .rowHighlight {
         animation: rowPulse 1.2s ease;
     }
+    
+    .inactiveRow{
+        opacity: 0.5;
+        td{
+            text-decoration: none;
+        }
+        &:hover{
+            opacity: 0.65;
+        }
+    }
+
 
     @keyframes rowPulse {
         0% {

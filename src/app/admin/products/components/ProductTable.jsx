@@ -28,9 +28,8 @@ export default function ProductTable({
                     {products.map((product) => (
                         <tr key={product.id}
                             className={
-                                highlightId === product.id
-                                ? styles.rowHighlight
-                                : ""
+                                `${highlightId === product.id ? styles.rowHighlight : "" }
+                                 ${product.active === false? styles.inactiveRow: ""}`
                             }
                         >
                             <td>
