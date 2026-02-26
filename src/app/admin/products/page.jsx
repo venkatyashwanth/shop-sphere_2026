@@ -14,6 +14,7 @@ export default function AdminProductsPage() {
     const [isFading, setIsFading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [statusFilter,setStatusFilter] = useState("All");
     const PRODUCTS_PER_PAGE = 6;
 
     useEffect(() => {
@@ -79,6 +80,11 @@ export default function AdminProductsPage() {
                 String(product.price).includes(search)
             )
         })
+        .filter((product) => {
+            if(statusFilter === "All") return true;
+            if(statusFilter === "Active") return product.active !== false;
+            if(statusFilter === "Inactive") return product.active === false;
+        })
 
     useEffect(() => {
         setCurrentPage(1)
@@ -112,7 +118,6 @@ export default function AdminProductsPage() {
                         setCategoryFilter(value);
                         setIsFading(true);
                         setTimeout(() => {
-                            // setCategoryFilter(value);
                             setIsFading(false);
                         }, 150)
                     }}
@@ -125,6 +130,15 @@ export default function AdminProductsPage() {
                                 : `${cat} (${categoryCounts[cat]})`}
                         </option>
                     ))}
+                </select>
+                <select 
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)} 
+                    className={styles.filterSelect}
+                    >
+                        <option value="All">All Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                 </select>
             </div>
             <div className={`${styles.tableWrapper} ${isFading ? styles.fade : ""}`}>
