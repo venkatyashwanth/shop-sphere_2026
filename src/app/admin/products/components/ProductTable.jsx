@@ -55,10 +55,11 @@ export default function ProductTable({
                 <tbody>
                     {products.map((product) => (
                         <tr key={product.id}
-                            className={
-                                `${highlightId === product.id ? styles.rowHighlight : ""}
-                                 ${product.active === false ? styles.inactiveRow : ""}`
-                            }
+                            className={`
+                                  ${styles.tableRow}
+                                  ${highlightId === product.id ? styles.rowHighlight : ""}
+                                  ${product.active === false ? styles.inactiveRow : ""}
+                                `}
                         >
                             <td>
                                 <img
