@@ -309,13 +309,15 @@
         border-radius: 999px;
 
         &::before {
-            content: "";
+            content: "🌞";
             position: absolute;
             height: calc(22px * var(--scale));
             width: calc(22px * var(--scale));
-            left: calc(3px * var(--scale));
-            top: calc(3px * var(--scale));
-            background-color: #fff;
+            left: 0;
+            top: -2px;
+            // left: calc(0px * var(--scale));
+            // top: calc(0px * var(--scale));
+            // background-color: #fff;
             transition: 0.3s;
             border-radius: 50%;
         }
@@ -323,10 +325,13 @@
 
     input:checked+.slider {
         background-color: #5a5a5a;
+        &::before{
+            content: "🌚";
+        }
     }
 
     input:checked+.slider::before {
-        transform: translateX(calc(24px * var(--scale)));
+        transform: translateX(calc(22px * var(--scale)));
     }
 }
 

@@ -166,7 +166,6 @@ export default function Header() {
                             <Link href="/login">Login</Link>
                         )}
                         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                            <span>{theme === "dark" ? "🌚" : "🌞"}</span>
                             <label className={styles.switch}>
                                 <input
                                     type="checkbox"
