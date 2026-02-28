@@ -1,0 +1,20 @@
+.storeToolbar{
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    input,select{
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--form-bg);
+        color: var(--form-text);
+        font-size: 14px;
+        transition: 0.2s ease;
+    }    
+    input:focus,
+    select:focus{
+        outline: none;
+        border-color: #3b82f6;
+    }
+}
