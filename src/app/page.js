@@ -3,6 +3,7 @@ import StoreToolbar from "@/components/store/StoreToolbar/StoreToolbar";
 import styles from "./page.module.scss";
 import ProductGrid from "@/components/ProductGrid/ProductGrid";
 import { useState } from "react";
+import HeroSection from "@/components/store/HeroSection/HeroSection";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,6 +12,7 @@ export default function Home() {
 
   return (
     <div className={styles.base}>
+      <HeroSection/>
       <StoreToolbar 
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
