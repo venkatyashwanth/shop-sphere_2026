@@ -13,7 +13,7 @@
   filter: blur(4px);
 }
 
-.mobileFilterBtn{
+.mobileFilterBtn {
   position: relative;
   display: none;
   padding: 10px 14px;
@@ -21,7 +21,8 @@
   border: 1px solid var(--border);
   background: var(--card-bg);
   font-size: 14px;
-  .filterBadge{
+
+  .filterBadge {
     position: absolute;
     top: -6px;
     right: -6px;
@@ -35,24 +36,93 @@
     text-align: center;
     animation: popIn 0.25s ease;
   }
-  @keyframes popIn{
-    0%{transform: scale(0.7);opacity: 0;}
-    100%{transform: scale(1);opacity: 1;}
+
+  @keyframes popIn {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 }
 
-.resultInfo{
+.resultInfo {
   font-size: 14px;
   margin-bottom: 12px;
   color: var(--form-text);
   transition: opacity 0.2s ease;
-  strong{
+
+  strong {
     transition: 0.2s ease;
   }
 }
 
-@media (max-width: 768px){
-  .mobileFilterBtn{
+.activeFilterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+
+  .filterChip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: chipFadeIn 0.25s ease;
+
+    &:hover {
+      background: rgba(59, 130, 246, 0.18);
+    }
+
+    .closeIcon {
+      font-size: 11px;
+    }
+  }
+
+  @keyframes chipFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.sortSection{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  label{
+    font-size: 13px;
+    font-weight: 500;
+  }
+  select{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background-color: var(--card-bg);
+  }
+}
+
+@media (max-width: 768px) {
+  .mobileFilterBtn {
     display: inline-block;
     margin-bottom: 16px;
   }

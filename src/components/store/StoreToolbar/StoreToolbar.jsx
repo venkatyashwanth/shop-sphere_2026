@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import styles from "./StoreToolbar.module.scss";
 import PriceRangeSlider from "../PriceRangeSlider/PriceRangeSlider";
 import CategoryPills from "../CategoryPills/CategoryPills";
@@ -8,14 +7,11 @@ export default function StoreToolbar({
     setDraftFilters,
     searchTerm,
     setSearchTerm,
-    sortBy,
-    setSortBy,
     minPrice,
     maxPrice,
     onApply,
     onClear
 }) {
-    const { items } = useSelector((state) => state.products);
 
     return (
         <div className={styles.storeToolbar}>
@@ -26,10 +22,16 @@ export default function StoreToolbar({
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                value={draftFilters.sort}
+                onChange={(e) => 
+                    setDraftFilters(prev => ({
+                        ...prev,
+                        sort: e.target.value
+                    }))
+                }
             >
                 <option value="Newest">Newest</option>
+                <option value="Oldest">Oldest</option>
                 <option value="PriceLow">Price: Low → High</option>
                 <option value="PriceHigh">Price: High → Low</option>
             </select>
