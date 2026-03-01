@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .pill {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        color: var(--form-text);
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        &.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+    }
+}

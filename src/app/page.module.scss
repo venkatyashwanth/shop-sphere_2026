@@ -1,3 +1,27 @@
-.base{
+.base {
   padding: 40px 0;
+}
+
+.gridWrapper {
+  transition: filter 0.25s ease,
+    transform 0.25s ease,
+    height 0.3s ease;
+  will-change: filter;
+}
+
+.blur {
+  filter: blur(4px);
+  transform: translateY(6px);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .gridWrapper {
+    transition: none;
+  }
+
+  .blur {
+    filter: none;
+    transform: none;
+  }
 }

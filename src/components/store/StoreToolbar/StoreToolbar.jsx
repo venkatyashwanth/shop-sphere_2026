@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 import styles from "./StoreToolbar.module.scss";
+import PriceRangeSlider from "../PriceRangeSlider/PriceRangeSlider";
+import CategoryPills from "../CategoryPills/CategoryPills";
 export default function StoreToolbar({
     searchTerm,
     setSearchTerm,
@@ -7,6 +9,10 @@ export default function StoreToolbar({
     setCategoryFilter,
     sortBy,
     setSortBy,
+    minPrice,
+    maxPrice,
+    priceRange,
+    setPriceRange
 }) {
     const { items } = useSelector((state) => state.products);
     const categoryItems = items.reduce((acc, product) => {
@@ -15,8 +21,7 @@ export default function StoreToolbar({
         return acc;
     }, {})
 
-    const uniqueCategories = ["All",...Object.keys(categoryItems)]
-
+    const uniqueCategories = ["All", ...Object.keys(categoryItems)]
 
     return (
         <div className={styles.storeToolbar}>
@@ -26,18 +31,23 @@ export default function StoreToolbar({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <select
+            {/* <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
             >
-                {uniqueCategories.map((cat) => 
+                {uniqueCategories.map((cat) =>
                     <option key={cat} value={cat}>
-                        {cat === "All" 
-                        ? `All (${items.length})`
-                        :`${cat} (${categoryItems[cat]})`}
+                        {cat === "All"
+                            ? `All (${items.length})`
+                            : `${cat} (${categoryItems[cat]})`}
                     </option>
                 )}
-            </select>
+            </select> */}
+            <CategoryPills
+                categories={uniqueCategories}
+                activeCategory={categoryFilter}
+                setActiveCategory={setCategoryFilter}
+            />
             <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -46,6 +56,12 @@ export default function StoreToolbar({
                 <option value="PriceLow">Price: Low → High</option>
                 <option value="PriceHigh">Price: High → Low</option>
             </select>
+            <PriceRangeSlider
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                range={priceRange}
+                setRange={setPriceRange}
+            />
         </div>
     )
 }
