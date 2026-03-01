@@ -4,12 +4,13 @@ export default function CategoryPills({
     activeCategory,
     setActiveCategory
 }) {
+    
     return (
         <div className={styles.wrapper}>
             {categories.map((cat) => (
                 <button
                     key={cat}
-                    onClick={() => setActiveCategory(cat)}
+                    onClick={() => {setActiveCategory(cat)}}
                     className={`${styles.pill} ${activeCategory === cat ? styles.active : ""}`}
                 >
                     {cat}

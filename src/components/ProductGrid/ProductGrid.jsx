@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { fetchProducts } from "@/features/products/productsSlice";
 import ProductCardSkeleton from "../ProductCardSkeleton/ProductCardSkeleton";
 export default function ProductGrid({
+    activeFilters,
     searchTerm,
     categoryFilter,
     sortBy,
@@ -19,8 +20,9 @@ export default function ProductGrid({
     const activeProducts = items.filter(p => p.active !== false);
     const filteredProducts = activeProducts
         .filter(product => {
-            if (categoryFilter === "All") return true;
-            return product.category === categoryFilter;
+            console.log("tringer")
+            if (activeFilters.category === "All") return true;
+            return product.category === activeFilters.category;
         })
         .filter(product => {
             if (!searchTerm) return true;
@@ -37,8 +39,8 @@ export default function ProductGrid({
             return 0;
         })
         .filter(product =>
-            product.price >= priceRange[0] &&
-            product.price <= priceRange[1]
+            product.price >= activeFilters.priceRange[0] &&
+            product.price <= activeFilters.priceRange[1]
         )
 
     useEffect(() => {

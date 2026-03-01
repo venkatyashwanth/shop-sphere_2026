@@ -17,6 +17,17 @@
         outline: none;
         border-color: #3b82f6;
     }
+    .applyBtn{
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        height: 38px;
+        cursor: pointer;
+        &:active{
+            transform: scale(0.9);
+        }
+    }
 }
 
 

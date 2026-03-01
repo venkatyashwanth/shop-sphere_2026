@@ -4,16 +4,15 @@ import PriceRangeSlider from "../PriceRangeSlider/PriceRangeSlider";
 import CategoryPills from "../CategoryPills/CategoryPills";
 export default function StoreToolbar({
     uniqueCategories,
+    draftFilters,
+    setDraftFilters,
     searchTerm,
     setSearchTerm,
-    categoryFilter,
-    setCategoryFilter,
     sortBy,
     setSortBy,
     minPrice,
     maxPrice,
-    priceRange,
-    setPriceRange
+    onApply
 }) {
     const { items } = useSelector((state) => state.products);
 
@@ -25,11 +24,6 @@ export default function StoreToolbar({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <CategoryPills
-                categories={uniqueCategories}
-                activeCategory={categoryFilter}
-                setActiveCategory={setCategoryFilter}
-            />
             <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -38,12 +32,19 @@ export default function StoreToolbar({
                 <option value="PriceLow">Price: Low → High</option>
                 <option value="PriceHigh">Price: High → Low</option>
             </select>
+            <CategoryPills
+                categories={uniqueCategories}
+                activeCategory={draftFilters.category}
+                setActiveCategory={(cat) => setDraftFilters(prev => ({ ...prev, category: cat }))}
+            />
+
             <PriceRangeSlider
                 minPrice={minPrice}
                 maxPrice={maxPrice}
-                range={priceRange}
-                setRange={setPriceRange}
+                range={draftFilters.priceRange}
+                setRange={(range) => setDraftFilters(prev => ({ ...prev, priceRange: range }))}
             />
+            <button className={styles.applyBtn} onClick={onApply}>Apply</button>
         </div>
     )
 }

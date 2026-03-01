@@ -4,6 +4,7 @@ import styles from "./FilterDrawer.module.scss";
 export default function FilterDrawer({
     open,
     onClose,
+    onApply,
     children
 }) {
     const drawerRef = useRef(null);
@@ -65,8 +66,6 @@ export default function FilterDrawer({
     return (
         <>
             <div onClick={() => { triggerHaptic(); onClose() }} className={`${styles.backdrop} ${open ? styles.showBackdrop : ""}`} />
-
-            {/* </div> */}
             <div
                 ref={drawerRef}
                 className={`${styles.drawer} ${open ? styles.open : ""}`} style={{ transform: open ? `translateY(${translateY}px)` : `translateY(100%)`, transition: dragging ? "none" : "transform 0.3s ease" }}
@@ -81,6 +80,17 @@ export default function FilterDrawer({
                 </div>
                 <div className={styles.content}>
                     {children}
+                </div>
+                <div className={styles.footer}>
+                    <button 
+                        className={styles.applyBtn}
+                        onClick={() => {
+                            triggerHaptic?.();
+                            onApply();
+                        }}
+                    >
+                        Apply Filters
+                    </button>
                 </div>
             </div>
         </>
