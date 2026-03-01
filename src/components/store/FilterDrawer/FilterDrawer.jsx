@@ -5,6 +5,7 @@ export default function FilterDrawer({
     open,
     onClose,
     onApply,
+    onClear,
     children
 }) {
     const drawerRef = useRef(null);
@@ -82,15 +83,20 @@ export default function FilterDrawer({
                     {children}
                 </div>
                 <div className={styles.footer}>
-                    <button 
-                        className={styles.applyBtn}
-                        onClick={() => {
-                            triggerHaptic?.();
-                            onApply();
-                        }}
-                    >
-                        Apply Filters
-                    </button>
+                    <div className={styles.actionsRow}>
+                        <button
+                            className={styles.applyBtn}
+                            onClick={() => {
+                                triggerHaptic?.();
+                                onApply();
+                            }}
+                        >
+                            Apply Filters
+                        </button>
+                        <button  className={styles.clearBtn} onClick={onClear}>
+                            Clear All
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

@@ -12,7 +12,8 @@ export default function StoreToolbar({
     setSortBy,
     minPrice,
     maxPrice,
-    onApply
+    onApply,
+    onClear
 }) {
     const { items } = useSelector((state) => state.products);
 
@@ -45,6 +46,7 @@ export default function StoreToolbar({
                 setRange={(range) => setDraftFilters(prev => ({ ...prev, priceRange: range }))}
             />
             <button className={styles.applyBtn} onClick={onApply}>Apply</button>
+            <button className={`${styles.clearBtn} ${styles.clear}`} onClick={onClear}>Clear</button>
         </div>
     )
 }

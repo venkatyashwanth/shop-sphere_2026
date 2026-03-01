@@ -9,9 +9,10 @@ import FilterDrawer from "@/components/store/FilterDrawer/FilterDrawer";
 import CategoryPills from "@/components/store/CategoryPills/CategoryPills";
 import PriceRangeSlider from "@/components/store/PriceRangeSlider/PriceRangeSlider";
 import AnimatedCounter from "./admin/components/ui/AnimatedCounter/AnimatedCounter";
+import StoreToolbarSkeleton from "@/components/store/StoreToolbar/StoreToolbarSkeleton";
 
 export default function Home() {
-  const { items } = useSelector((state) => state.products);
+  const { items, status } = useSelector((state) => state.products);
   const [isFiltering, setIsFiltering] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
@@ -23,9 +24,12 @@ export default function Home() {
   const prices = items.map(p => p.price).filter(Boolean);
   const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
   const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
-  // const [priceRange, setPriceRange] = useState([0, 0]);
-  // const [debouncedPriceRange, setDebouncedPriceRange] = useState([0, 0]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const defaultFilters = useMemo(() => ({
+    category: "All",
+    priceRange: [minPrice, maxPrice]
+  }), [minPrice, maxPrice])
 
   const categoryItems = items.reduce((acc, product) => {
     const cat = product.category || "Uncategorized";
@@ -34,12 +38,10 @@ export default function Home() {
   }, {})
 
   const uniqueCategories = ["All", ...Object.keys(categoryItems)]
-
-  // useEffect(() => {
-  //   if (prices.length > 0) {
-  //     setPriceRange([minPrice, maxPrice])
-  //   }
-  // }, [items])
+  const handleClearFilters = () => {
+    setDraftFilters(defaultFilters);
+    setActiveFilters(defaultFilters);
+  }
 
   useEffect(() => {
     if (prices.length > 0) {
@@ -102,19 +104,25 @@ export default function Home() {
   return (
     <div className={styles.base}>
       <HeroSection />
-      <StoreToolbar
-        uniqueCategories={uniqueCategories}
-        draftFilters={draftFilters}
-        setDraftFilters={setDraftFilters}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        prices={prices}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        onApply={() => setActiveFilters(draftFilters)}
-      />
+      {status !== "success" ?
+        <StoreToolbarSkeleton />
+        :
+        <StoreToolbar
+          uniqueCategories={uniqueCategories}
+          draftFilters={draftFilters}
+          setDraftFilters={setDraftFilters}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          prices={prices}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          onApply={() => setActiveFilters(draftFilters)}
+          onClear={() => handleClearFilters()}
+        />
+      }
+
       <div className={`${styles.gridWrapper} ${isFiltering ? styles.blur : ''}`}>
         <button className={styles.mobileFilterBtn} onClick={() => setDrawerOpen(true)}>
           Filter ⚙
@@ -125,7 +133,7 @@ export default function Home() {
           )}
         </button>
         <div className={styles.resultInfo}>
-          Showing <AnimatedCounter value={filteredProducts.length} duration={400}/>{" "}
+          Showing <AnimatedCounter value={filteredProducts.length} duration={400} />{" "}
           {filteredProducts.length === 1 ? "result" : "results"}
         </div>
         <ProductGrid products={filteredProducts} />
@@ -135,6 +143,10 @@ export default function Home() {
         onClose={() => setDrawerOpen(false)}
         onApply={() => {
           setActiveFilters(draftFilters);
+          setDrawerOpen(false);
+        }}
+        onClear={() => {
+          handleClearFilters();
           setDrawerOpen(false);
         }}
       >
