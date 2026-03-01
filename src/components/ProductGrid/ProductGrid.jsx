@@ -41,7 +41,7 @@ export default function ProductGrid({
             product.price <= priceRange[1]
         )
 
-        useEffect(() => {
+    useEffect(() => {
         if (!gridRef.current) return;
 
         const el = gridRef.current;
@@ -86,7 +86,7 @@ export default function ProductGrid({
     if (status === "error") return <p>{error}</p>
     return (
         <>
-            <div className={styles.grid} ref={gridRef} >
+            <div className={styles.grid}>
                 {filteredProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}

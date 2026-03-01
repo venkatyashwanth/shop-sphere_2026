@@ -314,7 +314,7 @@
             height: calc(22px * var(--scale));
             width: calc(22px * var(--scale));
             left: 0;
-            top: -2px;
+            top: 0px;
             // left: calc(0px * var(--scale));
             // top: calc(0px * var(--scale));
             // background-color: #fff;
@@ -325,7 +325,8 @@
 
     input:checked+.slider {
         background-color: #5a5a5a;
-        &::before{
+
+        &::before {
             content: "🌚";
         }
     }
@@ -349,6 +350,14 @@
     .nav a {
         // margin-left: 24px;
         font-size: 14px;
+    }
+
+    .switch {
+        .slider {
+            &::before {
+                top: -2px;
+            }
+        }
     }
 }
 

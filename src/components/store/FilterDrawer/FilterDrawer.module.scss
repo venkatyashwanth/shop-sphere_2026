@@ -34,6 +34,10 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    button{
+        background: transparent;
+        border: 0;
+    }
 }
 .content{
     display: flex;
