@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import FilterDrawer from "@/components/store/FilterDrawer/FilterDrawer";
 import CategoryPills from "@/components/store/CategoryPills/CategoryPills";
 import PriceRangeSlider from "@/components/store/PriceRangeSlider/PriceRangeSlider";
+import AnimatedCounter from "./admin/components/ui/AnimatedCounter/AnimatedCounter";
 
 export default function Home() {
   const { items } = useSelector((state) => state.products);
@@ -22,8 +23,8 @@ export default function Home() {
   const prices = items.map(p => p.price).filter(Boolean);
   const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
   const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
-  const [priceRange, setPriceRange] = useState([0, 0]);
-  const [debouncedPriceRange, setDebouncedPriceRange] = useState([0, 0]);
+  // const [priceRange, setPriceRange] = useState([0, 0]);
+  // const [debouncedPriceRange, setDebouncedPriceRange] = useState([0, 0]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const categoryItems = items.reduce((acc, product) => {
@@ -34,12 +35,11 @@ export default function Home() {
 
   const uniqueCategories = ["All", ...Object.keys(categoryItems)]
 
-
-  useEffect(() => {
-    if (prices.length > 0) {
-      setPriceRange([minPrice, maxPrice])
-    }
-  }, [items])
+  // useEffect(() => {
+  //   if (prices.length > 0) {
+  //     setPriceRange([minPrice, maxPrice])
+  //   }
+  // }, [items])
 
   useEffect(() => {
     if (prices.length > 0) {
@@ -55,12 +55,40 @@ export default function Home() {
     }
   }, [items])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedPriceRange(priceRange)
-    }, 450);
-    return () => clearTimeout(timer);
-  }, [priceRange])
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (activeFilters.category !== "All") count++;
+    const isPriceModified = activeFilters.priceRange[0] !== minPrice || activeFilters.priceRange[1] !== maxPrice;
+    if (isPriceModified) count++;
+    return count;
+  }, [activeFilters, minPrice, maxPrice])
+
+  const filteredProducts = useMemo(() => {
+    return items
+      .filter(product => {
+        const matchCategory =
+          activeFilters.category === "All" ||
+          product.category === activeFilters.category;
+
+        const matchPrice =
+          product.price >= activeFilters.priceRange[0] &&
+          product.price <= activeFilters.priceRange[1];
+
+        const matchSearch =
+          product.title
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+
+        return matchCategory && matchPrice && matchSearch;
+      })
+      .sort((a, b) => {
+        if (sortBy === "PriceLow") return a.price - b.price;
+        if (sortBy === "PriceHigh") return b.price - a.price;
+        if (sortBy === "Newest") return b.createdAt - a.createdAt;
+        return 0;
+      });
+  }, [items, activeFilters, searchTerm, sortBy]);
+
 
   useEffect(() => {
     setIsFiltering(true);
@@ -68,7 +96,7 @@ export default function Home() {
       setIsFiltering(false);
     }, 200);
     return () => clearTimeout(timer);
-  }, [searchTerm, categoryFilter, sortBy, debouncedPriceRange])
+  }, [searchTerm, activeFilters, sortBy])
 
 
   return (
@@ -85,17 +113,22 @@ export default function Home() {
         prices={prices}
         minPrice={minPrice}
         maxPrice={maxPrice}
-        onApply ={() => setActiveFilters(draftFilters)}
+        onApply={() => setActiveFilters(draftFilters)}
       />
       <div className={`${styles.gridWrapper} ${isFiltering ? styles.blur : ''}`}>
-        <button className={styles.mobileFilterBtn} onClick={() => setDrawerOpen(true)}> Filter ⚙</button>
-        <ProductGrid
-          activeFilters={activeFilters}
-          searchTerm={searchTerm}
-          categoryFilter={categoryFilter}
-          sortBy={sortBy}
-          priceRange={debouncedPriceRange}
-        />
+        <button className={styles.mobileFilterBtn} onClick={() => setDrawerOpen(true)}>
+          Filter ⚙
+          {activeFilterCount > 0 && (
+            <span className={styles.filterBadge}>
+              {activeFilterCount}
+            </span>
+          )}
+        </button>
+        <div className={styles.resultInfo}>
+          Showing <AnimatedCounter value={filteredProducts.length} duration={400}/>{" "}
+          {filteredProducts.length === 1 ? "result" : "results"}
+        </div>
+        <ProductGrid products={filteredProducts} />
       </div>
       <FilterDrawer
         open={drawerOpen}

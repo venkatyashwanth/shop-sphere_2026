@@ -11,16 +11,44 @@
 
 .blur {
   filter: blur(4px);
-  transform: translateY(6px);
 }
 
 .mobileFilterBtn{
+  position: relative;
   display: none;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--card-bg);
   font-size: 14px;
+  .filterBadge{
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 7px;
+    border-radius: 999px;
+    min-width: 18px;
+    text-align: center;
+    animation: popIn 0.25s ease;
+  }
+  @keyframes popIn{
+    0%{transform: scale(0.7);opacity: 0;}
+    100%{transform: scale(1);opacity: 1;}
+  }
+}
+
+.resultInfo{
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--form-text);
+  transition: opacity 0.2s ease;
+  strong{
+    transition: 0.2s ease;
+  }
 }
 
 @media (max-width: 768px){
