@@ -8,11 +8,13 @@
     transition: 0.25s ease;
     z-index: 1000;
 }
-.showBackdrop{
+
+.showBackdrop {
     opacity: 1;
     pointer-events: all;
 }
-.drawer{
+
+.drawer {
     position: fixed;
     left: 0;
     right: 0;
@@ -26,20 +28,32 @@
     max-height: 80vh;
     overflow-y: auto;
 }
-.open{
+
+.open {
     transform: translateY(0);
 }
-.header{
+
+.dragIndicator {
+    width: 40px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 999px;
+    margin: 0 auto 12px auto;
+}
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
-    button{
+
+    button {
         background: transparent;
         border: 0;
     }
 }
-.content{
+
+.content {
     display: flex;
     flex-direction: column;
     gap: 16px;
