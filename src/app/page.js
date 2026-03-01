@@ -10,12 +10,15 @@ import CategoryPills from "@/components/store/CategoryPills/CategoryPills";
 import PriceRangeSlider from "@/components/store/PriceRangeSlider/PriceRangeSlider";
 import AnimatedCounter from "./admin/components/ui/AnimatedCounter/AnimatedCounter";
 import StoreToolbarSkeleton from "@/components/store/StoreToolbar/StoreToolbarSkeleton";
+import MobileFilterBar from "@/components/store/MobileFilterBar/MobileFilterBar";
+import MobileSearchOverlay from "@/components/store/MobileSearchOverlay/MobileSearchOverlay";
 
 export default function Home() {
   const { items, status } = useSelector((state) => state.products);
   const [isFiltering, setIsFiltering] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm,setDebouncedSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
   const [sortBy, setSortBy] = useState("Newest");
   const prices = items.map(p => p.price).filter(Boolean);
   const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
@@ -116,7 +119,7 @@ export default function Home() {
   }
 
   // SEARCH
-  if(debouncedSearchTerm.trim() !== ""){
+  if (debouncedSearchTerm.trim() !== "") {
     activeChips.push({
       type: "search",
       label: `Seach: "${debouncedSearchTerm}"`
@@ -124,7 +127,7 @@ export default function Home() {
   }
 
   // SORT
-  if(activeFilters.sort !== "Newest"){
+  if (activeFilters.sort !== "Newest") {
     const sortLabelMap = {
       Oldest: "Oldest",
       PriceLow: "Price: Low  → High",
@@ -148,9 +151,9 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    },400)
+    }, 400)
     return () => clearTimeout(timer)
-  },[searchTerm])
+  }, [searchTerm])
 
 
   return (
@@ -174,14 +177,6 @@ export default function Home() {
       }
 
       <div className={`${styles.gridWrapper} ${isFiltering ? styles.blur : ''}`}>
-        <button className={styles.mobileFilterBtn} onClick={() => setDrawerOpen(true)}>
-          Filter ⚙
-          {activeFilterCount > 0 && (
-            <span className={styles.filterBadge}>
-              {activeFilterCount}
-            </span>
-          )}
-        </button>
         {activeChips.length > 0 && (
           <div className={styles.activeFilterRow}>
             {activeChips.map((chip) => (
@@ -201,10 +196,10 @@ export default function Home() {
                       priceRange: [minPrice, maxPrice]
                     }))
                   }
-                  if(chip.type === "search"){
+                  if (chip.type === "search") {
                     setSearchTerm("")
                   }
-                  if(chip.type === "sort"){
+                  if (chip.type === "sort") {
                     setActiveFilters(prev => ({
                       ...prev,
                       sort: "Newest"
@@ -249,22 +244,39 @@ export default function Home() {
         />
         <div className={styles.sortSection}>
           <label htmlFor="productSort">Sort By</label>
-          <select id="productSort" 
+          <select id="productSort"
             value={draftFilters.sort}
-            onChange={(e) => 
+            onChange={(e) =>
               setDraftFilters(prev => ({
                 ...prev,
                 sort: e.target.value
               }))
             }
-            >
-              <option value="Newest">Newest</option>
-              <option value="Oldest">Oldest</option>
-              <option value="PriceLow">Price: Low → High</option>
-              <option value="PriceHigh">Price: High → Low</option>
+          >
+            <option value="Newest">Newest</option>
+            <option value="Oldest">Oldest</option>
+            <option value="PriceLow">Price: Low → High</option>
+            <option value="PriceHigh">Price: High → Low</option>
           </select>
         </div>
       </FilterDrawer>
+      <MobileFilterBar
+        activeFilterCount={activeFilterCount}
+        onOpenFilters={() => setDrawerOpen(true)}
+        onOpenSearch={() => {
+          setSearchOpen(true)
+        }}
+        onOpenSort={() => {
+          setDrawerOpen(true)
+        }}
+      />
+      <MobileSearchOverlay
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        results={filteredProducts}
+      />
     </div>
   );
 }
