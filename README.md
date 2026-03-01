@@ -1,3 +1,29 @@
+<h1>About the project</h1>
+<p>
+  <strong>Overview</strong>
+  ShopSphere is a scalable e-commerce frontend application built using React and Redux.
+  It demonstrates real-world state management, filtering logic, pagination, and refresh-safe architecture.
+</p>
+
+<span>This project focuses on: </span>
+<ul>
+  <li>Clean component architecture</li>
+  <li>Centralized state management (Redux)</li>
+  <li>UI/UX best practices</li>
+  <li>Refresh-safe routing logic</li>
+</ul>
+<span>Features</span>
+<ul>
+  <li>📦 Product listing with API integration</li>
+  <li>🔍 Search functionality</li>
+  <li>🏷️ Category-based filtering</li>
+  <li>📄 Pagination</li>
+  <li>🔄 Refresh-safe product detail page</li>
+  <li>⚡ Optimized rendering</li>
+  <li>🎯 Clean and modular architecture</li>
+</ul>
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
