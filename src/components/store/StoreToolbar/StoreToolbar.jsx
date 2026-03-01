@@ -3,6 +3,7 @@ import styles from "./StoreToolbar.module.scss";
 import PriceRangeSlider from "../PriceRangeSlider/PriceRangeSlider";
 import CategoryPills from "../CategoryPills/CategoryPills";
 export default function StoreToolbar({
+    uniqueCategories,
     searchTerm,
     setSearchTerm,
     categoryFilter,
@@ -15,13 +16,6 @@ export default function StoreToolbar({
     setPriceRange
 }) {
     const { items } = useSelector((state) => state.products);
-    const categoryItems = items.reduce((acc, product) => {
-        const cat = product.category || "Uncategorized";
-        acc[cat] = (acc[cat] || 0) + 1;
-        return acc;
-    }, {})
-
-    const uniqueCategories = ["All", ...Object.keys(categoryItems)]
 
     return (
         <div className={styles.storeToolbar}>
@@ -31,18 +25,6 @@ export default function StoreToolbar({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {/* <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-            >
-                {uniqueCategories.map((cat) =>
-                    <option key={cat} value={cat}>
-                        {cat === "All"
-                            ? `All (${items.length})`
-                            : `${cat} (${categoryItems[cat]})`}
-                    </option>
-                )}
-            </select> */}
             <CategoryPills
                 categories={uniqueCategories}
                 activeCategory={categoryFilter}

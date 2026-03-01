@@ -18,3 +18,10 @@
         border-color: #3b82f6;
     }
 }
+
+
+@media (max-width: 768px){
+    .storeToolbar{
+        display: none;
+    }
+}
