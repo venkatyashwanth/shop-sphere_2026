@@ -23,6 +23,44 @@
         margin-bottom: 8px;
     }
 
+    .passwordField {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+
+        input {
+            width: 100%;
+        }
+
+        .togglePassword {
+            font-size: 24px;
+            margin: 0;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            color: var(--body-text);
+
+            &:focus {
+                outline: 1px solid var(--focus-ring);
+                outline-offset: 2px;
+            }
+        }
+
+        .strengthMeter {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
     input {
         background-color: var(--input-bg);
         border: 1px solid var(--input-border);
@@ -30,10 +68,16 @@
         padding: 12px;
         border-radius: 8px;
         font-size: 14px;
-        &:focus{
+
+        &:focus {
             outline: 1px solid var(--focus-ring);
             outline-offset: 2px;
         }
+    }
+
+    .fieldError {
+        color: var(--err-msg);
+        font-size: 12px;
     }
 
     button {
@@ -46,19 +90,38 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
-        &:hover{
+
+        &:hover {
             background-color: var(--btn-primary-hover);
         }
-        &:focus{
+
+        &:focus {
             outline: 1px solid var(--focus-ring-light);
         }
-        &:active{
-            transform: scale(0.98);     
+
+        &:active {
+            transform: scale(0.98);
         }
+
         &:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
+    }
+
+    button.disabledBtn {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .success {
+        font-size: 12px;
+        color: green;
+    }
+
+    .warning {
+        font-size: 12px;
+        color: orange;
     }
 }
 
@@ -85,6 +148,44 @@
         }
     }
 }
+
+.strengthMeter {
+    height: 2px;
+    background: var(--pill-bg);
+    //   border: 1px solid var(--pill-border);
+    border-radius: 4px;
+    margin-top: 6px;
+}
+
+.strengthBar {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.strength0 {
+    width: 0%;
+}
+
+.strength1 {
+    width: 25%;
+    background: red;
+}
+
+.strength2 {
+    width: 50%;
+    background: orange;
+}
+
+.strength3 {
+    width: 75%;
+    background: yellowgreen;
+}
+
+.strength4 {
+    width: 100%;
+    background: green;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
     .form {
