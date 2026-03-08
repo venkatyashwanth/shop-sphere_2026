@@ -202,7 +202,7 @@
     }
 
     .icon {
-        font-size: 16px;
+        font-size: 24px;
     }
 
     .label {
@@ -215,6 +215,8 @@
         cursor: pointer;
         background-color: transparent;
         border: none;
+        font-size: 28px;
+        color: var(--body-text);
     }
 
     .collapsed {

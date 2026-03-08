@@ -38,6 +38,10 @@
     display: inline-flex;
     align-items: center;
     z-index: 5;
+
+    .icon {
+        font-size: 24px;
+    }
 }
 
 .badge {
@@ -148,8 +152,9 @@
     cursor: pointer;
 
     .dropdownArrow {
-        font-size: 12px;
-        transition: transform 0.2s ease;
+        font-size: 22px;
+        transition: transform 0.4s ease;
+        transform-origin: center;
         user-select: none;
     }
 
@@ -224,6 +229,7 @@
     }
 
     a {
+        display: block;
         text-decoration: none;
         font-size: 14px;
         color: var(--dropdown-text);
@@ -231,6 +237,27 @@
 
         &:hover {
             color: var(--dropdown-item-hover-text);
+        }
+
+        &:focus {
+            outline: 1px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+    }
+
+    .menuList {
+        list-style: none;
+        padding: 0;
+        margin: 6px 0 0 0;
+    }
+
+    .menuList li {
+        display: block;
+        padding: 8px 0px;
+
+        &:hover {
+            background-color: var(--dropdown-item-hover-bg);
+            cursor: pointer;
         }
     }
 }
@@ -274,6 +301,8 @@
 }
 
 .logout {
+    display: block;
+    width: 100%;
     background: none;
     border: none;
     font-size: 14px;
@@ -283,6 +312,10 @@
 
     &:hover {
         opacity: 0.8;
+    }
+    &:focus{
+        outline: 1px solid var(--focus-ring);
+        outline-offset: 2px;
     }
 }
 
