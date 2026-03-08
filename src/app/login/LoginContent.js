@@ -50,7 +50,6 @@ export default function LoginContent() {
     },[user,authLoading,router])
 
     if (!mounted) return null;
-    // if(typeof window === "undefined") return null;
     return (
         <div className={styles.wrapper}>
             <form className={styles.form} onSubmit={handleLogin}>
