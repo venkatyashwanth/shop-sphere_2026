@@ -19,9 +19,23 @@ export default function PriceRangeSlider({
         }
     }
 
+    const left = ((range[0] - minPrice) / (maxPrice - minPrice)) * 100;
+    const right = 100 - ((range[1] - minPrice) / (maxPrice - minPrice)) * 100;
+
     return (
         <div className={styles.wrapper}>
-            <div className={styles.slider}>
+            <div className={styles.slider} tabIndex={0}>
+                {/* Track */}
+                <div className={styles.track}></div>
+
+                {/* Selected range */}
+                <div className={styles.progressWrap}>
+                    <div
+                        className={styles.progress}
+                        style={{ left: `${left}%`, right: `${right}%` }}
+                    ></div>
+                </div>
+
                 <input
                     className={styles.inputRange}
                     type="range"

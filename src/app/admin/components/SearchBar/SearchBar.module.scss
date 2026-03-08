@@ -12,15 +12,21 @@
 }
 .searchInput {
     width: 100%;
+    background-color: var(--input-bg);
+    color: var(--input-text);
     padding: 10px 14px 10px 36px;
     border-radius: 12px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--input-border);
     font-size: 14px;
     transition: border 0.2s ease, box-shadow 0.2s ease;
 
     &:focus {
-        outline: none;
+        outline: 1px solid var(--input-focus-border);
+        outline-offset: 2px;
         border-color: #999;
         box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+    &::placeholder{
+        color: var(--input-placeholder);
     }
 }

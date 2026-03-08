@@ -48,11 +48,6 @@ export default function ProductDetailsPage() {
         }
     }, [productsStatus, dispatch]);
 
-
-
-
-
-    // ✅ AFTER ALL HOOKS
     if (status !== "success") {
         return <ProductDetailsSkeleton />
     }
@@ -61,7 +56,6 @@ export default function ProductDetailsPage() {
         return <div className={styles.error}>Product not found.</div>
     }
 
-    // if(!product) return null;
     const blurURL = product.image.replace(
         "/upload/",
         "/upload/w_20,q_10,e_blur:1000/"

@@ -10,7 +10,7 @@ export default function OrderSuccessPage() {
                     Your order has been placed.
                 </p>
                 <div className={styles.actions}>
-                    <Link href="/">
+                    <Link href="/orders">
                         <button className={styles.primary}>
                             View My Orders
                         </button>

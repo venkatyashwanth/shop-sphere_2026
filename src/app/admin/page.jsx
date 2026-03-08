@@ -65,7 +65,6 @@ export default function AdminPage() {
                     />
                     <OrdersTable
                         debouncedSearch={debouncedSearch}
-                        // orders={sortedOrders}
                         orders={paginatedData}
                         onSelect={setSelectedOrder}
                         onStatusChange={handleOptimisticUpdate}

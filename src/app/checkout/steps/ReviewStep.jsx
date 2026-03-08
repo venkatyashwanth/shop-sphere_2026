@@ -1,3 +1,5 @@
+import styles from "../page.module.scss";
+
 export default function ReviewStep({
     items,
     totalPrice,
@@ -12,9 +14,12 @@ export default function ReviewStep({
                     <p>{item.title} x {item.quantity}</p>
                 </div>
             ))}
-            <p>Total: ₹{totalPrice}</p>
-            <button onClick={back}>Back</button>
-            <button onClick={next}>Confirm</button>
+            <p className={styles.totalPrice}>Total: ₹{totalPrice}</p>
+            <div className={styles.actionRow}>
+                <button onClick={back}>Back</button>
+                <button onClick={next}>Confirm</button>
+            </div>
+
         </div>
     )
 }

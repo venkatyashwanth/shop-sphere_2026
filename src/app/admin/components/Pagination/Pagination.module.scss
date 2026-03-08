@@ -5,8 +5,9 @@
     margin: 16px 0;
 
     button {
-        border: none;
-        background: #f2f2f2;
+        background: var(--pagination-bg);
+        border: 1px solid var(--pagination-border);
+        color: var(--pagination-text);
         padding: 6px 10px;
         border-radius: 8px;
         cursor: pointer;
@@ -14,17 +15,22 @@
         transition: all 0.2s ease;
 
         &:disabled {
-            opacity: 0.4;
+            background-color: var(--pagination-disabled-bg);
+            color: var(--pagination-disabled-text);
+            border: 1px solid var(--pagination-disabled-border);
             cursor: not-allowed;
         }
 
         &:hover:not(:disabled) {
-            background: #e0e0e0;
+            background: var(--pagination-hover-bg);
+            color: var(--pagination-text);
+            border: 1px solid var(--pagination-hover-border);
         }
 
         &.active {
-            background: #000;
-            color: #fff;
+            background: var(--pagination-active-bg);
+            border: 1px solid var(--pagination-active-border);
+            color: var(--pagination-active-text);
         }
     }
 }

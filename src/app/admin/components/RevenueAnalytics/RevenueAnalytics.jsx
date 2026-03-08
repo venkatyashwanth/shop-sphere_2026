@@ -12,12 +12,16 @@ import {
     AreaChart,
 } from "recharts";
 import styles from "./RevenueAnalytics.module.scss";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Skeleton from "../ui/Skeleton/Skeleton";
+import { useTheme } from "@/app/hooks/useTheme";
 export default function RevenueAnalytics({ orders }) {
+    const { theme } = useTheme();
     const [range, setRange] = useState("30days");
     const [chartType, setChartType] = useState("line");
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+
+
     const { chartData, comparison } = useMemo(() => {
         const revenueMap = {};
         const now = new Date();
@@ -87,10 +91,62 @@ export default function RevenueAnalytics({ orders }) {
         };
     }, [orders, range]);
 
+    const getCssVar = (name) =>
+        getComputedStyle(document.documentElement)
+            .getPropertyValue(name)
+            .trim();
+    const chartTheme = {
+        tooltipBg: getCssVar("--tooltip-bg"),
+    };
+    // const chartTheme = useMemo(() => ({
+    //     tooltipBg: getCssVar("--tooltip-bg"),
+    // }),[theme])
+
+
+    // const [graphTheme, setGraphTheme] = useState({ linearGradient: "#f0f0f3", lineColor: "#6e6e73", tooltipBg: "#ffffff", tooltipBrd: "#d2d2d7" })
+    const [graphTheme, setGraphTheme] = useState({
+        linearGradient: getCssVar("--graph-gradient"),
+        lineColor: getCssVar("--graph-line"),
+        cartesianGrid: getCssVar("--cartesian-grid"),
+        coordinatesLine: getCssVar("--coordinates-line"),
+        tooltipBg: getCssVar("--tooltip-bg"),
+        tooltipBrd: getCssVar("--tooltip-border"),
+        tooltiplbl: getCssVar("--tooltip-label"),
+        tooltiptxt: getCssVar("--tooltip-text")
+    })
+
+    useEffect(() => {
+        theme == "dark" ?
+            setGraphTheme(prev => ({
+                ...prev,
+                linearGradient: getCssVar("--graph-gradient"),
+                lineColor: getCssVar("--graph-line"),
+                cartesianGrid: getCssVar("--cartesian-grid"),
+                coordinatesLine: getCssVar("--coordinates-line"),
+                tooltipBg: getCssVar("--tooltip-bg"),
+                tooltipBrd: getCssVar("--tooltip-border"),
+                tooltiplbl: getCssVar("--tooltip-label"),
+                tooltiptxt: getCssVar("--tooltip-text")
+            }))
+            :
+            setGraphTheme(prev => ({
+                ...prev,
+                linearGradient: getCssVar("--graph-gradient"),
+                lineColor: getCssVar("--graph-line"),
+                cartesianGrid: getCssVar("--cartesian-grid"),
+                coordinatesLine: getCssVar("--coordinates-line"),
+                tooltipBg: getCssVar("--tooltip-bg"),
+                tooltipBrd: getCssVar("--tooltip-border"),
+                tooltiplbl: getCssVar("--tooltip-label"),
+                tooltiptxt: getCssVar("--tooltip-text")
+            }))
+    }, [theme])
+
+
     if (!chartData.length) {
         return (
             <div className={styles.card}>
-                <Skeleton height="24px" width="150px" mb="10px"/>
+                <Skeleton height="24px" width="150px" mb="10px" />
                 <Skeleton height="300px" />
             </div>
         );
@@ -164,12 +220,12 @@ export default function RevenueAnalytics({ orders }) {
                             >
                                 <stop
                                     offset="5%"
-                                    stopColor="#000"
+                                    stopColor={graphTheme.linearGradient}
                                     stopOpacity={0.4}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="#000"
+                                    stopColor={graphTheme.linearGradient}
                                     stopOpacity={0}
                                 />
                             </linearGradient>
@@ -177,20 +233,29 @@ export default function RevenueAnalytics({ orders }) {
 
                         <CartesianGrid
                             strokeDasharray="3 3"
-                            stroke={isDark ? "#333" : "#eee"}
+                            stroke={graphTheme.cartesianGrid}
                         />
 
-                        <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke={isDark ? "#aaa" : "#666"} />
-                        <YAxis tick={{ fontSize: 11 }} stroke={isDark ? "#aaa" : "#666"} />
-
+                        <XAxis dataKey="date" tick={{ fontSize: 12 }}
+                            stroke={graphTheme.coordinatesLine}
+                        />
+                        <YAxis tick={{ fontSize: 11 }}
+                            stroke={graphTheme.coordinatesLine}
+                        />
                         <Tooltip
+                            contentStyle={{
+                                backgroundColor: `${graphTheme.tooltipBg}`,
+                                border: `1px solid ${graphTheme.tooltipBrd}`,
+                                borderRadius: "8px"
+                            }}
+                            labelStyle={{ color: `${graphTheme.tooltiplbl}`, fontSize: "12px" }}
+                            itemStyle={{ color: `${graphTheme.tooltiptxt}`, fontSize: "14px" }}
                             formatter={(value) => `₹${value}`}
                         />
-
                         <Area
                             type="monotone"
                             dataKey="revenue"
-                            stroke="#000"
+                            stroke={graphTheme.lineColor}
                             fillOpacity={1}
                             fill="url(#colorRevenue)"
                             animationDuration={800}
@@ -198,13 +263,29 @@ export default function RevenueAnalytics({ orders }) {
                     </AreaChart>
                 ) : (
                     <BarChart data={chartData}>
-                        <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#333" : "#eee"} />
-                        <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke={isDark ? "#aaa" : "#666"} />
-                        <YAxis tick={{ fontSize: 11 }} stroke={isDark ? "#aaa" : "#666"} />
-                        <Tooltip />
+                        <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke={graphTheme.cartesianGrid}
+                        />
+                        <XAxis dataKey="date" tick={{ fontSize: 11 }}
+                            stroke={graphTheme.coordinatesLine}
+                        />
+                        <YAxis tick={{ fontSize: 11 }}
+                            stroke={graphTheme.coordinatesLine}
+                        />
+                        <Tooltip
+                            contentStyle={{
+                                backgroundColor: `${graphTheme.tooltipBg}`,
+                                border: `1px solid ${graphTheme.tooltipBrd}`,
+                                borderRadius: "8px"
+                            }}
+                            labelStyle={{ color: `${graphTheme.tooltiplbl}`, fontSize: "12px" }}
+                            itemStyle={{ color: `${graphTheme.tooltiptxt}`, fontSize: "14px" }}
+                            formatter={(value) => `₹${value}`}
+                        />
                         <Bar
                             dataKey="revenue"
-                            fill="#000"
+                            fill={graphTheme.lineColor}
                             radius={[6, 6, 0, 0]}
                             animationDuration={800}
                         />

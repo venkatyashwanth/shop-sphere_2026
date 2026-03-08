@@ -1,5 +1,5 @@
 .card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
@@ -10,13 +10,14 @@
     border-radius: 6px;
     margin-bottom: 12px;
     background: #eaeaea;
+    background-color: var(--btn-secondary-border);
     position: relative;
     overflow: hidden;
 }
 
 .line {
     height: 14px;
-    background: #eaeaea;
+    background: var(--btn-secondary-border);
     border-radius: 4px;
     margin-bottom: 10px;
     position: relative;

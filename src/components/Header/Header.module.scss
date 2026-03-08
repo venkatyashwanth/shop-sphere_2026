@@ -1,6 +1,6 @@
 .header {
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    background-color: var(--main-bg);
+    border-bottom: 1px solid var(--main-border);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -17,7 +17,7 @@
     font-weight: 600;
     font-size: 18px;
     text-decoration: none;
-    color: var(--color-txt2);
+    color: var(--main-text);
 }
 
 .nav {
@@ -29,7 +29,7 @@
 .nav a {
     font-size: 14px;
     text-decoration: none;
-    color: var(--color-secondary);
+    color: var(--main-text);
     transition: 0.2s ease;
 }
 
@@ -44,7 +44,7 @@
     position: absolute;
     top: -8px;
     right: -10px;
-    background: var(--color-accent);
+    background: var(--badge-primary);
     color: #fff;
     font-size: 10px;
     font-weight: 600;
@@ -55,7 +55,7 @@
     z-index: 1;
 }
 
-.userEmai {
+.userEmail {
     font-size: 13px;
     color: var(--color-secondary);
 }
@@ -90,7 +90,7 @@
 .skeletonLogo {
     width: 120px;
     height: 18px;
-    background: #eaeaea;
+    background: var(--skeleton-bg);
     border-radius: 6px;
     position: relative;
     overflow: hidden;
@@ -105,7 +105,7 @@
 .skeletonLink {
     width: 70px;
     height: 14px;
-    background: #eaeaea;
+    background: var(--skeleton-bg);
     border-radius: 6px;
     position: relative;
     overflow: hidden;
@@ -123,7 +123,7 @@
     width: 120px;
     background: linear-gradient(90deg,
             transparent,
-            rgba(255, 255, 255, 0.6),
+            var(--skeleton-shimmer),
             transparent);
     animation: shimmer 1.4s infinite;
 }
@@ -191,13 +191,12 @@
     min-width: 200px;
     padding: 14px;
     border-radius: 14px;
+    background: var(--dropdown-bg);
+    border: 1px solid var(--dropdown-border);
 
-    // background: rgba(255, 255, 255, 1);
-    background: rgb(220, 220, 220);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 
-    border: 1px solid rgba(220, 220, 220, 1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
@@ -210,17 +209,16 @@
     &::before {
         content: '';
         position: absolute;
-        top: -6px;
-        right: 16px;
+        top: -7px;
+        right: 20px;
         width: 12px;
         height: 12px;
-        background: rgb(220, 220, 220);
+        background: var(--dropdown-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
 
-        border-left: 1px solid rgba(220, 220, 220, 1);
-        border-top: 1px solid rgba(220, 220, 220, 1);
-
+        border-left: 1px solid var(--dropdown-border);
+        border-top: 1px solid var(--dropdown-border);
         transform: rotate(45deg);
         z-index: 90;
     }
@@ -228,11 +226,11 @@
     a {
         text-decoration: none;
         font-size: 14px;
-        color: #333;
+        color: var(--dropdown-text);
         transition: color 0.2s ease;
 
         &:hover {
-            color: var(--color-accent);
+            color: var(--dropdown-item-hover-text);
         }
     }
 }
@@ -267,9 +265,11 @@
 
 .userEmail {
     font-size: 12px;
-    color: #777;
+    color: var(--dropdown-text);
+    opacity: 0.7;
     padding-bottom: 8px;
     border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--dropdown-border);
     white-space: nowrap;
 }
 
@@ -279,7 +279,7 @@
     font-size: 14px;
     text-align: left;
     cursor: pointer;
-    color: #e53935;
+    color: var(--btn-dngr);
 
     &:hover {
         opacity: 0.8;
