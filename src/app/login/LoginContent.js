@@ -26,6 +26,8 @@ export default function LoginContent() {
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(false);
 
+    const registered = searchParams.get("registered");
+
     const validateField = (name, value) => {
         let message = "";
         if (name === "email") {
@@ -153,6 +155,12 @@ export default function LoginContent() {
                     <span>Don't have an account?</span>
                     <Link href="/register">Create One</Link>
                 </div>
+
+                {registered && (
+                    <p className={styles.success}>
+                        Account created successfully. Please Login.
+                    </p>
+                )}
             </form>
         </div>
     )

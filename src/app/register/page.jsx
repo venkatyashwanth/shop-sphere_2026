@@ -1,7 +1,7 @@
 "use client";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.scss";
 import { useEffect, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { doc, setDoc } from "firebase/firestore";
 import { validateLogin } from "@/lib/validators/authValidators";
+import { signOut } from "firebase/auth";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -20,7 +21,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [showConfirmPassword, setShowConfirmPassword] = useState("");
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(null);
     const [errors, setErrors] = useState({})
     const [touched, setTouched] = useState({})
@@ -60,14 +61,11 @@ export default function RegisterPage() {
 
     const calculateStrength = (password) => {
         let score = 0;
-
         if (password.length > 6) score++;
         if (/[A-Z]/.test(password)) score++;
         if (/[0-9]/.test(password)) score++;
         if (/[^A-Za-z0-9]/.test(password)) score++;
-
         return score;
-
     }
 
     const isFormValid = email && password && confirmPassword && !errors.email && !errors.password && !errors.confirmPassword;
@@ -93,11 +91,12 @@ export default function RegisterPage() {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await setDoc(doc(db, "users", userCredential.user.uid), {
-                emal: userCredential.user.email,
+                email: userCredential.user.email,
                 role: "user",
                 createdAt: new Date().toISOString()
             })
-            router.push("/");
+            await signOut(auth);
+            router.push("/login?registered=true");
         } catch (err) {
             setError("Could not create account");
         }
@@ -212,9 +211,9 @@ export default function RegisterPage() {
                     <p className={styles.fieldError} role="alert" aria-live="assertive">{errors.confirmPassword}</p>
                 )}
                 {error && <p className={styles.error}>{error}</p>}
-                <button type="submit" 
-                className={!isFormValid ? styles.disabledBtn : ""}
-                disabled={loading}>
+                <button type="submit"
+                    className={!isFormValid ? styles.disabledBtn : ""}
+                    disabled={loading}>
                     {loading ? "Creating..." : "Register"}
                 </button>
                 <div className={styles.redirect}>
