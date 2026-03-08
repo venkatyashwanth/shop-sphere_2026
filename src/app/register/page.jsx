@@ -28,9 +28,6 @@ export default function RegisterPage() {
     const [capsLock, setCapsLock] = useState(false);
     const [passwordStrength, setPasswordStrength] = useState(0);
 
-    const [checkingEmail, setCheckingEmail] = useState(false);
-    const [emailAvailable, setEmailAvailable] = useState(null);
-
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -71,26 +68,6 @@ export default function RegisterPage() {
 
         return score;
 
-    }
-
-    const checkEmailAvailability = async (email) => {
-        if (!email) return;
-        setCheckingEmail(true);
-        try {
-            const methods = await fetchSignInMethodsForEmail(auth, email);
-            if (methods.length > 0) {
-                setEmailAvailable(false);
-                setErrors(prev => ({
-                    ...prev,
-                    email: "Eamil already registered"
-                }))
-            } else {
-                setEmailAvailable(true);
-            }
-        } catch (error) {
-            console.error(err)
-        }
-        setCheckingEmail(false);
     }
 
     const isFormValid = email && password && confirmPassword && !errors.email && !errors.password && !errors.confirmPassword;
@@ -145,7 +122,6 @@ export default function RegisterPage() {
                     value={email}
                     onBlur={() => {
                         setTouched(prev => ({ ...prev, email: true }))
-                        // checkEmailAvailability(email)
                     }}
                     onChange={(e) => {
                         const value = e.target.value;
@@ -156,12 +132,6 @@ export default function RegisterPage() {
                 {touched.email && errors.email && (
                     <p className={styles.fieldError} role="alert" aria-live="assertive">{errors.email}</p>
                 )}
-                {/* {checkingEmail && (
-                    <p className={styles.info}>Checking email...</p>
-                )}
-                {emailAvailable && (
-                    <p className={styles.success}>Email available  ✓</p>
-                )} */}
 
                 <div className={styles.passwordField}>
                     <input
@@ -241,12 +211,6 @@ export default function RegisterPage() {
                 {touched.confirmPassword && errors.confirmPassword && (
                     <p className={styles.fieldError} role="alert" aria-live="assertive">{errors.confirmPassword}</p>
                 )}
-
-
-
-
-
-
                 {error && <p className={styles.error}>{error}</p>}
                 <button type="submit" 
                 className={!isFormValid ? styles.disabledBtn : ""}
