@@ -64,6 +64,7 @@
 
   --btn-dngr: #ef4444;
   --btn-dngr-hover: #dc2626;
+  --err-msg: #dc2626;
 
   --input-bg: #ffffff;
   --input-text: #1d1d1f;
@@ -231,4 +232,9 @@ body {
   @media (min-width: 1024px) {
     /* Desktop */
   }
+}
+
+.srOnly{
+  position: absolute;
+  left: -9999px;
 }

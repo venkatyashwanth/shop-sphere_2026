@@ -24,6 +24,36 @@
         margin-bottom: 8px;
     }
 
+    .passwordWrapper {
+        border: 1px solid var(--input-border);
+        border-radius: 8px;
+        position: relative;
+
+        .togglePassword {
+            font-size: 24px;
+            margin: 0;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            color: var(--body-text);
+            &:focus{
+                outline: 1px solid var(--focus-ring);
+                outline-offset: 2px;
+            }
+        }
+        input{
+            width: 100%;
+            border: 0;
+        }
+    }
+
     input {
         background-color: var(--input-bg);
         border: 1px solid var(--input-border);
@@ -42,6 +72,11 @@
         }
     }
 
+    .fieldError {
+        color: var(--err-msg);
+        font-size: 12px;
+    }
+
     button {
         margin-top: 8px;
         padding: 12px;
@@ -53,7 +88,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
 
-        &:hover{
+        &:hover {
             background-color: var(--btn-primary-hover);
         }
 
@@ -70,6 +105,10 @@
         &:active {
             transform: scale(0.98);
         }
+    }
+    button.disabledBtn{
+        opacity: 0.6;
+        cursor: not-allowed;
     }
 }
 
