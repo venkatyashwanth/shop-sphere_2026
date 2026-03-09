@@ -141,6 +141,7 @@ export default function LoginContent() {
                 setError("Login Cancelled")
             } else {
                 setError("Google login failed. Please try again.")
+                console.log(err);
             }
             console.error(err);
         }
