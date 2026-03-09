@@ -10,11 +10,11 @@
     }
 
     .pill {
+        background: var(--card-bg);
+        border: 1px solid var(--main-border);
+        color: var(--body-text);
         padding: 8px 14px;
         border-radius: 999px;
-        border: 1px solid var(--border);
-        background: var(--card-bg);
-        color: var(--form-text);
         font-size: 13px;
         cursor: pointer;
         transition: all 0.25s ease;

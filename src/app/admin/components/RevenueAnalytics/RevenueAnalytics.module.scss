@@ -1,5 +1,6 @@
 .card {
     background-color: var(--color-bg2);
+    background-color: var(--card-bg);
     border-radius: 16px;
     padding: 24px;
     margin: 32px 0;
@@ -19,12 +20,13 @@
         padding: 6px 12px;
         border: none;
         border-radius: 8px;
-        background: #f0f0f0;
+        background: var(--card-bg);
+        border: 1px solid var(--card-hover-border);
+        color: var(--card-title);
         cursor: pointer;
 
         &.active {
-            background: #000;
-            color: white;
+            background: var(--card-hover-bg);
         }
     }
 }
@@ -41,12 +43,12 @@
 }
 
 .negative {
-    color: red;
+    color: var(--btn-dngr);
 }
 
 // Display none for mobile
-@media (max-width: 768px){
-    .card{
+@media (max-width: 768px) {
+    .card {
         display: none;
     }
 }

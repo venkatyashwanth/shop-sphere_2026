@@ -1,30 +1,41 @@
-.Link{
+.Link {
     color: currentColor;
     text-decoration: none;
+    // width: 300px;
+    width: 100%;
+    border-radius: 8px;
+    &:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 3px;
+    }
 }
+
 .card {
-    background-color: white;
+    background-color: var(--card-bg);
     border-radius: 8px;
     padding: 16px;
     transition: 0.3s ease;
+    border: 1px solid var(--main-border);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     cursor: pointer;
     animation: cardEnter 0.35s ease forwards;
     transform-origin: center;
 
     @keyframes cardEnter {
-        0%{
+        0% {
             opacity: 0;
             transform: scale(0.96);
         }
-        100%{
+
+        100% {
             opacity: 1;
             transform: scale(1);
         }
     }
 
     &:hover {
-        transform: translateY(-4px);
+        background-color: var(--card-hover-bg);
+        border: 1px solid var(--card-hover-border);
     }
 }
 
@@ -39,26 +50,42 @@
 }
 
 .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
     h3 {
+        color: var(--card-title);
         font-size: 16px;
         margin-bottom: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 140px;
+        white-space: nowrap;
     }
+
+    .category {
+        font-size: 14px;
+        color: var(--card-muted);
+    }
+
+    .price {
+        color: var(--card-text);
+        margin-top: 8px;
+        font-weight: 600;
+    }
+
+    .actionRow {
+        flex-shrink: 0;
+    }
+
 }
 
-.category {
-    font-size: 14px;
-    color: var(--color-secondary);
-}
-
-.price {
-    margin-top: 8px;
-    font-weight: 600;
-}
 
 /* Tablet and Above*/
 @media (min-width: 768px) {
     .card {
-        padding: 24px;
+        padding: 16px;
     }
 
     .image {
@@ -68,25 +95,27 @@
     .info {
         h3 {
             font-size: 18px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 220px;
         }
     }
 }
 
-.button{
+.button {
     margin-top: 12px;
     padding: 10px;
     border-radius: 8px;
     border: none;
-    background: var(--color-accent);
-    color: #fff;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
     cursor: pointer;
-    transition: 0o.2s ease;
-    &:hover{
-        opacity: 0.9;
+    transition: background-color .2s ease;
+
+    &:hover {
+        background-color: var(--btn-primary-hover);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
     }
 }
 
@@ -96,7 +125,8 @@
         transition: none;
         animation: none;
     }
-    .button{
+
+    .button {
         transition: none;
     }
 }

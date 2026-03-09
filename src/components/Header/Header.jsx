@@ -1,4 +1,6 @@
 "use client";
+import { IoCart } from "react-icons/io5";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { useSelector } from "react-redux";
 import styles from "./Header.module.scss";
 import Link from "next/link";
@@ -56,7 +58,6 @@ export default function Header() {
         let index = 0;
         focusable[index].focus();
         function handleKeyDown(e) {
-            console.log(e.key);
             if (!open) return;
             if (e.key === "Escape") {
                 e.preventDefault();
@@ -131,10 +132,21 @@ export default function Header() {
                                             aria-expanded={open}
                                             aria-controls="user-menu"
                                         >
-                                            <span className={styles.avatarLetter}>
-                                                {user.email?.charAt(0).toUpperCase()}
+                                            {user?.photoURL ? (
+                                                <img 
+                                                    src={user.photoURL}
+                                                    alt={user.name}
+                                                    className={styles.avatarImg}/>
+                                            ) :
+                                                <span className={styles.avatarLetter}>
+                                                    {user.email?.charAt(0).toUpperCase()}
+                                                    {console.log(user.name)}
+                                                </span>
+                                            }
+
+                                            <span className={`${styles.dropdownArrow} ${open ? styles.rotateArrow : ""}`}>
+                                                🔻
                                             </span>
-                                            <span className={`${styles.dropdownArrow} ${open ? styles.rotateArrow : ""}`}>🔻</span>
                                         </button>
                                     </div>
                                 </div>
@@ -148,16 +160,25 @@ export default function Header() {
                                         <span className={styles.userEmail}>
                                             {user.email}
                                         </span>
-                                        <Link href="/orders" role="menuitem" tabIndex={0} onClick={() => setOpen(false)}>My Orders</Link>
-
-
-                                        {user?.role === "admin" && (
-                                            <Link href="/admin" role="menuitem" onClick={() => setOpen(false)}>Admin</Link>
-                                        )}
-
-                                        <button role="menuitem" onClick={handleLogout} className={styles.logout}>
-                                            Logout
-                                        </button>
+                                        <ul className={styles.menuList}>
+                                            <li>
+                                                <Link href="/orders" role="menuitem" onClick={() => setOpen(false)}>
+                                                    My Orders
+                                                </Link>
+                                            </li>
+                                            {user?.role === "admin" && (
+                                                <li>
+                                                    <Link href="/admin" role="menuitem" onClick={() => setOpen(false)}>
+                                                        Admin
+                                                    </Link>
+                                                </li>
+                                            )}
+                                            <li>
+                                                <button role="menuitem" onClick={handleLogout} className={styles.logout}>
+                                                    Logout
+                                                </button>
+                                            </li>
+                                        </ul>
                                     </div>
                                 )}
 
@@ -178,7 +199,7 @@ export default function Header() {
                             </label>
                         </div>
                         <Link href="/cart" className={styles.cart}>
-                            🛒
+                            <IoCart className={styles.icon} />
                             {isMounted && totalQuantity > 0 && (
                                 <span className={styles.badge}>{totalQuantity}</span>
                             )}

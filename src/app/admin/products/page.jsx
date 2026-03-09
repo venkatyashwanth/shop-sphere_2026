@@ -132,7 +132,7 @@ export default function AdminProductsPage() {
 
     return (
         <div className={styles.wrapper}>
-            <h1>Products page</h1>
+            <h1 className={styles.pageTitle}>Products page</h1>
             <ProductForm editingProduct={editingProduct} clearEdit={() => setEditingProduct(null)} setHighlightId={setHighlightId} />
             <div className={styles.filterBar}>
                 <input

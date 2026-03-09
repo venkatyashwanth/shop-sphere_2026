@@ -5,7 +5,7 @@
 }
 
 .statCard {
-    background-color: var(--color-bg2);
+    background-color: var(--card-bg);
     border-radius: 16px;
     padding: 20px;
     display: flex;
@@ -17,7 +17,6 @@
         box-shadow 0.2s ease;
 
     &:hover {
-        transform: translateY(-4px);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     }
 
@@ -25,13 +24,13 @@
         margin: 0;
         font-size: 20px;
         font-weight: 600;
-        color: var(--color-txt2);
+        color: var(--card-title);
     }
 
     p {
         margin: 4px 0 0;
         font-size: 13px;
-        color: var(--color-lghttxt);
+        color: var(--card-text);
     }
 }
 

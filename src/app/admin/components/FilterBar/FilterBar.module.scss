@@ -3,12 +3,13 @@
     gap: 10px;
     margin-bottom: 20px;
     margin: 10px;
-    // overflow-x: auto;
 }
 
 .filterBtn {
     border: none;
-    background: #f2f2f2;
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    color: var(--pill-text);
     border-radius: 20px;
     padding: 8px 14px;
     font-size: 13px;
@@ -17,11 +18,14 @@
     transition: all 0.2s ease;
 
     &:hover {
-        background: #e6e6e6;
+        background: var(--pill-hover-bg);
+        border: 1px solid var(--pill-hover-border);
+        color: var(--pill-hover-text);
     }
 
     &.activeFilter {
-        background: #000;
-        color: #fff;
+        background: var(--pill-active-bg);
+        border: 1px solid var(--pill-active-border);
+        color: var(--pill-active-text);
     }
 }

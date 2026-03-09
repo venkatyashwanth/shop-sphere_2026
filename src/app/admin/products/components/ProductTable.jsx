@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styles from './ProductTable.module.scss';
 export default function ProductTable({
     products,
@@ -51,7 +50,6 @@ export default function ProductTable({
                         </th>
                     </tr>
                 </thead>
-
                 <tbody>
                     {products.map((product) => (
                         <tr key={product.id}

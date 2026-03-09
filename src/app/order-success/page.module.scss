@@ -9,18 +9,20 @@
 .card {
     max-width: 500px;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--card-bg);
     padding: 32px;
     border-radius: 16px;
     text-align: center;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 
     h1 {
+        color: var(--card-title);
         font-size: 22px;
         margin-bottom: 12px;
     }
 
     p {
+        color: var(--card-text);
         font-size: 14px;
         color: #666;
         margin-bottom: 24px;
@@ -45,12 +47,14 @@
         }
 
         &.primary {
-            background: var(--color-accent);
-            color: white;
+            background: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
         }
 
-        .secondary {
-            background: #f3f3f3;
+        &.secondary {
+            background: var(--btn-secondary-bg);
+            border: 1px solid var(--btn-secondary-border);
+            color: var(--btn-secondary-text);
         }
 
     }

@@ -3,13 +3,13 @@
     bottom: 0;
     left: 0;
     right: 0;
+    background-color: var(--main-bg);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--main-border);
     display: none;
     justify-content: space-around;
     align-items: center;
     padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid var(--border);
     z-index: 1000;
     transition: transform 0.3s ease, opacity 0.2s ease;
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
@@ -24,6 +24,7 @@
     }
 
     button {
+        color: var(--main-text);
         background: none;
         border: none;
         font-size: 13px;
@@ -36,7 +37,7 @@
             position: absolute;
             top: -6px;
             right: -10px;
-            background: #3b82f6;
+            background: var(--badge-primary);
             color: white;
             font-size: 10px;
             padding: 3px 6px;

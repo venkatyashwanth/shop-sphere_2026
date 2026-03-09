@@ -15,7 +15,9 @@
     background: none;
     border: none;
     font-size: 20px;
+    color: var(--card-title);
     cursor: pointer;
+    float: right;
 }
 
 .sidebar {
@@ -24,7 +26,8 @@
     left: -260px;
     width: 240px;
     min-height: 100vh;
-    background: var(--color-bg2);
+    background: var(--main-bg);
+    border-right: 1px solid var(--main-border);
     padding: 20px;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
     transition: left 0.25s ease;
@@ -59,21 +62,24 @@
     gap: 12px;
 
     a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         text-decoration: none;
-        color: #333;
+        color: var(--main-text);
         font-size: 14px;
         padding: 8px 10px;
         border-radius: 6px;
         transition: background 0.2s ease;
 
         &:hover {
-            background: #f0f0f0;
+            background: var(--card-hover-bg);
         }
 
         &.active {
             background: rgba(0, 0, 0, 0.05);
-            color: #000;
-            font-weight: 500;
+            color: var(--main-text);
+            font-weight: 600;
             position: relative;
 
             &::before {
@@ -84,7 +90,7 @@
                 bottom: 8px;
                 width: 3px;
                 border-radius: 4px;
-                background: #000;
+                background: var(--card-hover-border);
             }
         }
     }
@@ -97,10 +103,10 @@
 }
 
 .pageTitle {
-    font-size: 22px;
+    font-size: var(--title-fs);
     font-weight: 600;
+    color: var(--body-text);
     margin-bottom: 24px;
-    color: var(--color-txt2);
 }
 
 /* ===================== */
@@ -118,7 +124,7 @@
 
 .tableWrapper {
     overflow-x: auto;
-    background-color: white;
+    background-color: var(--card-bg);
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
@@ -144,6 +150,8 @@
     background: none;
     border: none;
     font-size: 18px;
+    color: var(--card-title);
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -184,20 +192,17 @@
         height: 400px;
         min-height: auto;
         box-shadow: none;
-        border-right: 1px solid var(--color-border);
+        border-right: 1px solid var(--main-border);
         left: 0;
         transition: width 0.25s ease;
     }
 
     .nav a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
         transition: justify-content 0.2s ease;
     }
 
     .icon {
-        font-size: 16px;
+        font-size: 24px;
     }
 
     .label {
@@ -210,6 +215,8 @@
         cursor: pointer;
         background-color: transparent;
         border: none;
+        font-size: 28px;
+        color: var(--body-text);
     }
 
     .collapsed {

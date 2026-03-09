@@ -1,3 +1,6 @@
+.pageTitle{
+    font-size: var(--title-fs);
+}
 .filterBar {
     margin-bottom: 20px;
     display: flex;
@@ -7,36 +10,36 @@
 }
 
 .searchInput {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
     flex: 1;
     min-width: 200px;
     padding: 8px 14px;
     border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--card-bg);
-    color: var(--form-text);
     font-size: 14px;
     transition: all 0.2s ease;
 
     &:focus {
-        outline: none;
-        border-color: #3b82f6;
+        outline: 1px solid var(--input-focus-border);
+        outline-offset: 2px;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 }
 
 .filterSelect {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
     padding: 8px 14px;
     border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--card-bg);
-    color: var(--form-text);
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:focus {
-        outline: none;
-        border-color: #3b82f6;
+        outline: 1px solid var(--input-focus-border);
+        outline-offset: 2px;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 }
@@ -62,7 +65,7 @@
 
 .pageInfo {
     font-size: 14px;
-    color: var(--form-text);
+    color: var(--body-text);
 }
 
 .pageControls {
@@ -70,27 +73,31 @@
     gap: 6px;
 
     button {
+        background: var(--pagination-bg);
+        border: 1px solid var(--pagination-border);
+        color: var(--pagination-text);
         padding: 6px 10px;
         border-radius: 8px;
-        border: 1px solid var(--border);
-        background: var(--card-bg);
-        color: var(--form-text);
+        min-width: 30px;
         cursor: pointer;
         transition: all 0.2s ease;
 
         &:hover {
-            background: rgba(0, 0, 0, 0.05);
+            background-color: var(--pagination-hover-bg);
+            border: 1px solid var(--pagination-hover-border);
         }
 
         &:disabled {
-            opacity: 0.4;
+            background-color: var(--pagination-disabled-bg);
+            border: 1px solid var(--pagination-disabled-border);
+            color: var(--pagination-disabled-text);
             cursor: not-allowed;
         }
 
         &.activePage {
-            background: #3b82f6;
-            color: white;
-            border-color: #3b82f6;
+            background: var(--pagination-active-bg);
+            border: 1px solid var(--pagination-active-border);
+            color: var(--pagination-active-text);
         }
     }
 }

@@ -24,13 +24,15 @@
     h2 {
         font-size: 20px;
         font-weight: 600;
-        color: var(--color-primary);
+        color: var(--body-text);
         margin-bottom: 12px;
     }
 
     p {
         font-size: 14px;
-        color: var(--color-secondary);
+        font-weight: 400;
+        color: var(--body-text);
+        opacity: 0.8;
         max-width: 280px;
         line-height: 1.5;
     }
@@ -45,14 +47,15 @@
 .item {
     display: flex;
     gap: 16px;
-    background-color: #fff;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-hover-border);
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    transition: transform 0.2s ease;
-
+    transition: all 0.2s ease;
+    
     &:hover {
-        transform: translateY(-2px);
+        background-color: var(--card-hover-bg);
     }
 }
 
@@ -77,8 +80,9 @@
     button {
         width: 32px;
         height: 32px;
-        border: 1px solid var(--color-border);
-        background-color: #fff;
+        background-color: var(--input-bg);
+        border: 1px solid var(--input-border);
+        color: var(--input-text);
         cursor: pointer;
         border-radius: 50%;
         font-size: 14px;
@@ -107,12 +111,12 @@
     margin-top: 6px;
     background: none;
     border: none;
-    color: var(--color-secondary);
+    color: var(--card-muted);
     font-size: 12px;
     cursor: pointer;
 
     &:hover {
-        color: var(--color-primary);
+        color: var(--body-text);
     }
 }
 
@@ -128,7 +132,7 @@
 }
 
 .summary {
-    background-color: #fff;
+    background-color: var(--card-bg);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
@@ -168,12 +172,12 @@
     margin-top: 12px;
     background: none;
     border: none;
-    color: var(--color-secondary);
+    color: var(--card-muted);
     cursor: pointer;
     transition: color 0.2s ease;
 
     &:hover {
-        color: var(--color-primary);
+        color: var(--body-text);
     }
 }
 

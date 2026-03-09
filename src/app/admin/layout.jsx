@@ -1,5 +1,10 @@
 "use client";
 import Link from "next/link";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
+import { FaBoxOpen } from "react-icons/fa";
+import { IoMdPaper } from "react-icons/io";
 import styles from "./admin.module.scss";
 import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
@@ -65,7 +70,7 @@ export default function AdminLayout({ children }) {
                             className={styles.collapseBtn}
                             onClick={() => setCollapsed(prev => !prev)}
                         >
-                            {collapsed ? "»" : "«"}
+                            {collapsed ? <MdOutlineKeyboardDoubleArrowRight /> : <MdOutlineKeyboardDoubleArrowLeft />}
                         </button>
                         <button className={styles.closeBtn}
                             onClick={() => setOpen(false)}
@@ -73,15 +78,21 @@ export default function AdminLayout({ children }) {
                     </div>
                     <nav className={styles.nav}>
                         <Link href="/admin" data-label="Dashboard" className={isActive("/admin") ? styles.active : ""} onClick={() => setOpen(false)}>
-                            <span className={styles.icon}>📊</span>
+                            <span className={styles.icon}>
+                                <MdDashboard />
+                            </span>
                             <span className={styles.label}>Dashboard</span>
                         </Link>
                         <Link href="/admin/products" data-label="Products" className={isActive("/admin/products") ? styles.active : ""} onClick={() => setOpen(false)}>
-                            <span className={styles.icon}>📦</span>
+                            <span className={styles.icon}>
+                                <FaBoxOpen />
+                            </span>
                             <span className={styles.label}>Products</span>
                         </Link>
                         <Link href="/admin/orders" data-label="Orders" className={isActive("/admin/orders") ? styles.active : ""} onClick={() => setOpen(false)}>
-                            <span className={styles.icon}>🧾</span>
+                            <span className={styles.icon}>
+                                <IoMdPaper />
+                            </span>
                             <span className={styles.label}>Orders</span>
                         </Link>
                         <Link href="/" data-label="Back to Store" onClick={() => setOpen(false)}>
