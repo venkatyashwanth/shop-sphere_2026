@@ -132,9 +132,18 @@ export default function Header() {
                                             aria-expanded={open}
                                             aria-controls="user-menu"
                                         >
-                                            <span className={styles.avatarLetter}>
-                                                {user.email?.charAt(0).toUpperCase()}
-                                            </span>
+                                            {user?.photoURL ? (
+                                                <img 
+                                                    src={user.photoURL}
+                                                    alt={user.name}
+                                                    className={styles.avatarImg}/>
+                                            ) :
+                                                <span className={styles.avatarLetter}>
+                                                    {user.email?.charAt(0).toUpperCase()}
+                                                    {console.log(user.name)}
+                                                </span>
+                                            }
+
                                             <span className={`${styles.dropdownArrow} ${open ? styles.rotateArrow : ""}`}>
                                                 🔻
                                             </span>

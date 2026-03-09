@@ -161,6 +161,13 @@
     .rotateArrow {
         transform: rotate(180deg);
     }
+
+    .avatarImg{
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 }
 
 .avatarBtn {

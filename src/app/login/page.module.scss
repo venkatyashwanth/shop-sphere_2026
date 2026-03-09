@@ -1,6 +1,7 @@
 .wrapper {
     min-height: 70vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 24px 0;
@@ -11,7 +12,7 @@
     max-width: 400px;
     background-color: var(--card-bg);
     padding: 32px;
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
@@ -137,6 +138,31 @@
         &:hover {
             text-decoration: underline;
         }
+    }
+}
+
+.directLogin{
+    background-color: var(--card-bg);
+    border-radius: 0 0 12px 12px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid var(--pill-hover-border);
+    button{
+        background-color: var(--pill-bg);
+        border: 1px solid var(--pill-border);
+        color: var(--pill-text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+
     }
 }
 

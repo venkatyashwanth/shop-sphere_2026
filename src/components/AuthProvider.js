@@ -14,12 +14,19 @@ export default function AuthProvider({ children }) {
             if (firebaseUser) {
                 try {
                     const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
-                    const role = userDoc.exists() ? userDoc.data().role : "user";
+                    const role = userDoc.exists() ? userDoc?.data().role : "user";
+                    let data = {};
+                    if(userDoc.exists()){
+                        data = userDoc.data();
+                    }
+                    
                     dispatch(
                         setUser({
                             uid: firebaseUser.uid,
                             email: firebaseUser.email,
-                            role
+                            role: data.role || "user",
+                            name: data.name || firebaseUser.displayName || "",
+                            photoURL: data.photoURL || firebaseUser.photoURL || ""
                         })
                     )
                 } catch (error) {
@@ -28,7 +35,9 @@ export default function AuthProvider({ children }) {
                         setUser({
                             uid: firebaseUser.uid,
                             email: firebaseUser.email,
-                            role: "user"
+                            role: "user",
+                            name: firebaseUser.displayName || "",
+                            photoURL: firebaseUser.photoURL || ""
                         })
                     )
                 }

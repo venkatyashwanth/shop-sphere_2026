@@ -1,14 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { IoEye } from "react-icons/io5";
-import { IoEyeOff } from "react-icons/io5";
-import styles from "./page.module.scss";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, db } from "@/lib/firebase";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { auth } from "@/lib/firebase";
 import { validateLogin } from "@/lib/validators/authValidators";
+import styles from "./page.module.scss";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function LoginContent() {
     const authState = useSelector((state) => state.auth);
@@ -25,6 +28,7 @@ export default function LoginContent() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
 
     const registered = searchParams.get("registered");
 
@@ -83,6 +87,66 @@ export default function LoginContent() {
 
         setLoading(false);
     };
+
+    const signInWithGoogle = async () => {
+        setLoading(true);
+        setError("");
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            await setDoc(
+                doc(db, "users", user.uid),
+                {
+                    email: user.email,
+                    role: "user",
+                    createdAt: new Date().toISOString()
+                },
+                { merge: true }
+            );
+            router.replace("/")
+        } catch (err) {
+            console.error(err);
+            setError("Google Sign-in failed");
+        }
+        setLoading(false);
+    }
+
+    const handleGoogleLogin = async () => {
+        setGoogleLoading(true);
+        setError("");
+
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            await setDoc(
+                doc(db, "users", user.uid),
+                {
+                    email: user.email,
+                    name: user.displayName,
+                    photoURL: user.photoURL,
+                    role: "user",
+                    createdAt: new Date().toISOString()
+                },
+                { merge: true }
+            );
+            router.replace("/");
+        } catch (err) {
+            if (err.code === "auth/popup-blocked") {
+                setError("Popup blocked. Please allow popups for this site.")
+            }
+            else if (err.code === "auth/cancelled-popup-request") {
+                setError("Login Cancelled")
+            } else {
+                setError("Google login failed. Please try again.")
+            }
+            console.error(err);
+        }
+        setGoogleLoading(false);
+    }
+
 
     useEffect(() => {
         setMounted(true);
@@ -162,6 +226,31 @@ export default function LoginContent() {
                     </p>
                 )}
             </form>
+            <div className={styles.directLogin}>
+                <div className={styles.divider}>
+                    <span>or</span>
+                </div>
+                <button
+                    type="button"
+                    className={styles.googleBtn}
+                    // onClick={signInWithGoogle}
+                    onClick={handleGoogleLogin}
+                    disabled={googleLoading}
+                >
+                    {googleLoading ? (
+                        <>
+                            <FcGoogle size={24} />
+                            Signing in...
+                        </>
+                    ) : (
+                        <>
+                            <FcGoogle size={24} />
+                            continue with google
+                        </>
+                    )}
+
+                </button>
+            </div>
         </div>
     )
 }
