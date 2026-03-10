@@ -1,0 +1,62 @@
+.tableWrapper {
+    // background: #fff;
+    border-radius: 12px;
+    // border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+.orderId {
+    font-weight: 600;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        background: var(--table-header-bg);
+    }
+
+    th {
+        text-align: left;
+        padding: 14px 18px;
+        font-size: 13px;
+        color: var(--table-header-text);
+        font-weight: 600;
+    }
+
+    td {
+        padding: 16px 18px;
+        font-size: 14px;
+        color: var(--table-header-text);
+    }
+
+    tbody tr {
+        background-color: var(--table-row-bg);
+        border-bottom: 1px solid var(--table-border);
+        
+    }
+
+    tbody tr:hover {
+        background: var(--table-row-hover);
+    }
+
+}
+
+.actionBtn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+.viewBtn {
+    background: #2563eb;
+    color: white;
+}
+
+.deleteBtn {
+    background: #ef4444;
+    color: white;
+}
