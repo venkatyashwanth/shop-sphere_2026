@@ -1,0 +1,17 @@
+.container {
+    // padding: 20px;
+}
+.pageTitle{
+    font-size: var(--title-fs);
+}
+
+
+.resultCount {
+    font-size: 14px;
+    color: var(--card-muted);
+    margin-bottom: 12px;
+}
+.emptyState{
+    padding: 20px;
+    text-align: center;
+}

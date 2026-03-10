@@ -1,0 +1,27 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+
+    button {
+        padding: 8px 14px;
+        border-radius: 6px;
+        background: var(--pagination-bg);
+        border: 1px solid var(--pagination-border);
+        color: var(--pagination-text);
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    button:hover {
+        background: var(--pagination-hover-bg);
+        border: 1px solid var(--pagination-hover-border);
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
