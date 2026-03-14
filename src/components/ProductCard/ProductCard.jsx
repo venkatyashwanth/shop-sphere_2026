@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/features/cart/cartslice";
-import { showToast } from "@/features/toast/toastSlice";
+import { addToast} from "@/features/toast/toastSlice";
 import styles from "./ProductCard.module.scss";
 
 export default function ProductCard({ product }) {
@@ -10,7 +10,7 @@ export default function ProductCard({ product }) {
     const handleAddToCart = (e) => {
         e.preventDefault();
         dispatch(addToCart(product));
-        dispatch(showToast("Added to cart 🥳"));
+        dispatch(addToast("Item added to cart 🥳"));
     }
     return (
         <Link href={`/product/${product.id}`} className={styles.Link}>

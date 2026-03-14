@@ -1,16 +1,20 @@
 .toastNotification {
     position: fixed;
     bottom: 20px;
-    // left: 50%;
     right: 0;
-    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;   
+}
+
+.toastItem {
     background: var(--toast-bg);
     border: 1px solid var(--toast-border);
     color: var(--toast-text);
     padding: 12px 20px;
     border-radius: 6px;
-    z-index: 9999;
-
+    transform: translateX(-50%);
     animation: taost-in 0.35s ease;
 }
 
@@ -27,7 +31,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .toastNotification {
+    .toastItem {
         animation: none;
     }
 }
