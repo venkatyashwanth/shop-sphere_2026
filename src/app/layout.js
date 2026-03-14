@@ -4,7 +4,7 @@ import "./globals.scss";
 import Providers from "./providers";
 import AuthProvider from "@/components/AuthProvider";
 import ThemeProvider from "./providers/ThemeProvider";
-
+import Toast from "@/components/Toast/Toast";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,6 +31,7 @@ export default function RootLayout({ children }) {
               <main className="container">
                 {children}
               </main>
+              <Toast />
             </AuthProvider>
           </ThemeProvider>
         </Providers>
