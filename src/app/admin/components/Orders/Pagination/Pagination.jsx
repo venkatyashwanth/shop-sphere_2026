@@ -1,7 +1,7 @@
 import styles from "./Pagination.module.scss";
 
 export default function Pagination({ page, setPage, totalPages }) {
-  // if (totalPages <= 1) return null;
+  if (totalPages <= 1) return null;
   return (
     <div className={styles.pagination}>
 

@@ -7,7 +7,7 @@ export default function OrderRow({ order, deletedOrder, search }) {
     // const handleDelete = () => {
     //     setOrders((prev) => prev.filter((o) => o.id !== order.id));
     // }
-    console.log(order);
+    // console.log(order);
     return (
         <tr>
             <td className={styles.orderId}>
